@@ -43,7 +43,7 @@ export default function HomeScreen() {
       onSelectType={setSelectedType} 
     />
 
-    {/* Eliminamos el FlatList aquí y delegamos todo a PetsList */}
+    
     <PetsList type={selectedType} />
   </View>
 </>

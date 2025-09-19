@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import TabsScreen from './tabs';
 import AuthStackScreen from './auth';
-import DetalleMascota from './tabs/screens/detalleMascota'; // asegurate de la casing exacta
+import DetalleMascota from './tabs/screens/detalleMascota'; 
 import { RootStackParamList } from '../utils/RootStackParamList';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -13,7 +13,7 @@ export default function Root() {
 
     return (
         <Stack.Navigator
-            initialRouteName={isSigned ? "TABS" : "AUTH"} // literal keys
+            initialRouteName={isSigned ? "TABS" : "AUTH"} 
             screenOptions={{ headerShown: false }}
         >
             {isSigned ? (

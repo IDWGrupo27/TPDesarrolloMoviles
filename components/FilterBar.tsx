@@ -35,14 +35,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        gap: 10, // espacio entre chips
+        gap: 10, 
         marginVertical: 15,
     },
   filterButton: {
         paddingVertical: 8,
         paddingHorizontal: 18,
         borderRadius: 25,
-        backgroundColor: materialColors.schemes.dark.secondary, // morado oscuro tipo header
+        backgroundColor: materialColors.schemes.dark.secondary, 
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.15,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     filterButtonActive: {
-        backgroundColor: '#5e2b83ff', // un lila más vivo para el activo
+        backgroundColor: '#5e2b83ff', 
         shadowOpacity: 0.3,
         transform: [{ scale: 1.05 }],
     },

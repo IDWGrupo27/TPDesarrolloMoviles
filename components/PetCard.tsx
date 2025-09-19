@@ -1,8 +1,8 @@
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-import { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/RootStackParamList';
+import AspectRatioImage from './AspectRatioImage'; 
 
 interface PetCardProps {
     pet: {
@@ -16,28 +16,17 @@ interface PetCardProps {
 export default function PetCard({ pet }: PetCardProps) {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const cardWidth = Dimensions.get('window').width - 40;
-    const [imageAspect, setImageAspect] = useState(1.5);
-
-    useEffect(() => {
-        Image.getSize(pet.photos[0].medium, (width, height) => {
-            setImageAspect(width / height);
-        }, (error) => {
-            console.warn("No se pudo obtener tamaño de imagen:", error);
-        });
-    }, [pet.photos]);
 
     return (
         <TouchableOpacity 
             onPress={() => navigation.navigate("DetalleMascota", { pet })}
             style={[styles.petCard, { width: cardWidth }]}
         >
-            <View style={[styles.imageWrapper, { aspectRatio: imageAspect }]}>
-                <Image
-                    source={{ uri: pet.photos[0].medium }}
-                    style={styles.petImage}
-                    resizeMode="contain"
-                />
-            </View>
+           
+            {pet.photos && pet.photos[0] && (
+                <AspectRatioImage uri={pet.photos[0].medium} style={styles.imageWrapper} />
+            )}
+
             <View style={styles.petNameContainer}>
                 <Text style={styles.petName}>{pet.name}</Text>
             </View>
@@ -61,13 +50,6 @@ const styles = StyleSheet.create({
     },
     imageWrapper: {
         width: '100%',
-        backgroundColor: '#f0f0f0',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    petImage: {
-        width: '100%',
-        height: '100%',
     },
     petNameContainer: {
         position: 'absolute',

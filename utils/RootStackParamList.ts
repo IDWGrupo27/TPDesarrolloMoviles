@@ -1,4 +1,4 @@
-import { Pet } from './helpers/petfinderHelpers'; // ajustá el path
+import { Pet } from './helpers/petfinderHelpers'; 
 
 export type RootStackParamList = {
     TABS: undefined;
