@@ -3,6 +3,7 @@ import { TAB_ROUTES } from "../../utils/constants";
 import { HomeScreen, Nosotros } from "./screens";
 import { Ionicons } from "@expo/vector-icons";
 import { materialColors } from "../../utils/colors";
+import Perfil from "./screens/perfil";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +20,8 @@ export default function TabsScreen() {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === TAB_ROUTES.MY_NETWORK) {
                         iconName = focused ? 'people' : 'people-outline';
+                    } else if (route.name === TAB_ROUTES.PERFIL) {
+                        iconName = focused ? 'person' : 'person-outline';
                     }
 
                     //@ts-ignore
@@ -36,6 +39,11 @@ export default function TabsScreen() {
             <Tab.Screen name={TAB_ROUTES.MY_NETWORK} component={Nosotros}
                 options={{
                     title: "Nosotros",
+                }}
+            />
+            <Tab.Screen name={TAB_ROUTES.PERFIL} component={Perfil}
+                options={{
+                    title: "Perfil",
                 }}
             />
         </Tab.Navigator>
