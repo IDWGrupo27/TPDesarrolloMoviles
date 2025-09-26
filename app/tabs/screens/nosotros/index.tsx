@@ -5,6 +5,7 @@ import { materialColors } from "../../../../utils/colors";
 import { useNavigation } from "@react-navigation/native";
 import { TAB_ROUTES } from "../../../../utils/constants";
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function Nosotros() {
@@ -30,7 +31,7 @@ export default function Nosotros() {
     }, []);
 
     return (
-        <>
+        <SafeAreaView style={{ flex: 1 }}>
             <Header />
             <ScrollView>
                 <Animated.View style={[{
@@ -58,7 +59,7 @@ export default function Nosotros() {
 
                             Más de 500 mascotas adoptadas desde nuestro lanzamiento. Cada historia nos impulsa a seguir creciendo.
                         </Text>
-                        <Text style={{textAlign: 'center', fontSize: 16, padding: 15, fontStyle: 'italic'}}>
+                        <Text style={{ textAlign: 'center', fontSize: 16, padding: 15, fontStyle: 'italic' }}>
                             “No se trata solo de adoptar una mascota. Se trata de cambiar dos vidas para siempre.”
                         </Text>
                         <Image
@@ -67,19 +68,19 @@ export default function Nosotros() {
                             resizeMode="contain" />
                         <TouchableOpacity
                             style={styles.btn}
-                            >
+                        >
                             <Ionicons name={'logo-whatsapp'} size={20} color={'#fff'} />
                             <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>WHATSAPP</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.btn}
-                            >
+                        >
                             <Ionicons name={'mail-sharp'} size={20} color={'#fff'} />
                             <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>GMAIL</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.btn}
-                            >
+                        >
                             <Ionicons name={'logo-instagram'} size={20} color={'#fff'} />
                             <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>INSTAGRAM</Text>
                         </TouchableOpacity>
@@ -87,7 +88,7 @@ export default function Nosotros() {
                     </View>
                 </Animated.View>
             </ScrollView >
-        </>
+        </SafeAreaView>
     );
 };
 
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     btn: {
         minWidth: 180,
         marginHorizontal: 30,
-        marginVertical:10,
+        marginVertical: 10,
         backgroundColor: '#5e2b83',
         paddingVertical: 12,
         paddingHorizontal: 40,

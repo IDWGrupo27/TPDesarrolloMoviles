@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { Formik } from "formik"
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import {
     KeyboardAvoidingView,
     ScrollView,
@@ -8,7 +8,8 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet,
+    Alert
 } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import * as Yup from 'yup'
@@ -18,11 +19,8 @@ import { AUTH_ROUTES } from "../../../utils/constants"
 import Header from "../../../components/Header"
 import Link from "../../../components/Link"
 import { materialColors } from "../../../utils/colors"
+import { AUTH_ACTIONS, AuthContext } from "../../../shares/context";
 
-interface IFormValues {
-    email: string
-    pass: string
-}
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -36,11 +34,28 @@ const validationSchema = Yup.object().shape({
 export default function LoginFormik() {
     const navigation = useNavigation()
     const [showPassword, setShowPassword] = useState(false);
-    const [emailFocused, setEmailFocused] = useState(false); // Agregado para el estilo del label cuando el input tiene el foco
-    const [passwordFocused, setPasswordFocused] = useState(false); // Agregado para el estilo del label cuando el input tiene el foco
+    const [emailFocused, setEmailFocused] = useState(false);
+    const [passwordFocused, setPasswordFocused] = useState(false);
+    const { state, dispatch } = useContext(AuthContext)
 
-    const handleLogin = (values: IFormValues) => {
-        console.log(values)
+
+    const handleLogin = () => {
+
+        dispatch({
+            type: AUTH_ACTIONS.LOGIN,
+            payload: {
+                token: 'TOKEN',
+                refreshToken: 'REFRESH_TOKEN',
+                user: {
+                    id: '1',
+                    nombre: 'Martin',
+                    apellido: 'Forissi',
+                    direccion: 'Calle Falsa 123',
+                    telefono: '1234567890',
+                    email: 'forissimartin@gmail.com'
+                }
+            }
+        })
     }
 
     const handleGoToRegister = () => {
@@ -49,7 +64,14 @@ export default function LoginFormik() {
     }
 
     const handleGoToForgotPassword = () => {
-        console.log('handleGoToForgotPassword')
+        Alert.alert('RECUPERAR CONTRASEÑA', 'En construccion...', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ]);
     }
 
     return (
@@ -60,13 +82,13 @@ export default function LoginFormik() {
                 style={styles.keyboardView}
                 enabled={true}
             >
-
+                <Header />
                 <ScrollView
                     contentContainerStyle={styles.scrollContainer}
                     keyboardShouldPersistTaps="handled"
                     showsVerticalScrollIndicator={false}
                 >
-                    <Header />
+
                     <Formik
                         initialValues={{
                             email: '',
@@ -185,7 +207,7 @@ const styles = StyleSheet.create({
     formContainer: {
         flex: 1,
         paddingHorizontal: 24,
-        paddingTop: 40,
+        paddingTop: 30,
         paddingBottom: 20,
     },
     inputContainer: {
@@ -205,8 +227,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#E5E7EB',
         borderRadius: 12,
-        paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingHorizontal: 14,
+        paddingVertical: 10,
         fontSize: 16,
         backgroundColor: '#F9FAFB',
         color: '#1F2937',

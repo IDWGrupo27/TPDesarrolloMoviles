@@ -2,17 +2,26 @@ import { View, Text, StyleSheet } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { materialColors } from "../../utils/colors";
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useContext } from "react";
+import { AUTH_ACTIONS, AuthContext } from "../../shares/context";
+import Logout from "../Logout";
 
 export default function Header() {
-    return (
 
+    const { state, dispatch } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        dispatch({ type: AUTH_ACTIONS.LOGOUT })
+    }
+
+    return (
         <LinearGradient
             colors={[materialColors.schemes.dark.onPrimary, materialColors.schemes.dark.secondary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.header}
         >
+
             <View style={styles.logo}>
                 <Ionicons name="paw" size={30} color={materialColors.schemes.dark.onPrimary} />
             </View>
@@ -20,6 +29,9 @@ export default function Header() {
             <Text style={styles.appTitle}>PetWay</Text>
 
             <Text style={styles.appSubtitle}>Encuentra tu compañero ideal</Text>
+
+            {state?.user ? <Logout logout={handleLogout} /> : null}
+
         </LinearGradient>
 
     );
@@ -62,6 +74,6 @@ const styles = StyleSheet.create({
         color: materialColors.schemes.light.onPrimary,
         fontSize: 16,
         textAlign: 'center',
-        marginBottom: 0,
+        marginBottom: 5,
     },
 });

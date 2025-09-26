@@ -1,13 +1,22 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TAB_ROUTES } from "../../utils/constants";
 import { HomeScreen, Nosotros } from "./screens";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { materialColors } from "../../utils/colors";
+import { useContext } from "react";
+import { AUTH_ACTIONS, AuthContext } from "../../shares/context";
+import { TouchableOpacity } from "react-native";
 import Perfil from "./screens/perfil";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabsScreen() {
+
+    const { state, dispatch } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        dispatch({ type: AUTH_ACTIONS.LOGOUT })   // Implement logout functionality here
+    }
 
     return (
         <Tab.Navigator

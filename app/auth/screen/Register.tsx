@@ -1,8 +1,16 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
-import { useEffect, useState } from "react";
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    KeyboardAvoidingView,
+    ScrollView,
+    Alert
+} from "react-native";
+import { useState } from "react";
 import Link from "../../../components/Link";
 import Button from "../../../components/Button";
-import { sizes } from "../../../utils";
 import { materialColors } from "../../../utils/colors";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -15,8 +23,22 @@ import Header from "../../../components/Header";
 interface IFormValues {
     nombre: string
     apellido: string
+    direccion: string
+    telefono: string
+    descripcion?: string
     email: string
     pass: string
+}
+
+interface IUser {
+    id: number;
+    nombre: string;
+    apellido: string;
+    direccion: string;
+    telefono: string;
+    descripcion?: string;
+    pass: string;
+    email: string;
 }
 
 const FormValidationSchema = Yup.object().shape({
@@ -24,6 +46,10 @@ const FormValidationSchema = Yup.object().shape({
         .required('Nombre es requerido'),
     apellido: Yup.string()
         .required('Apellido es requerido'),
+    direccion: Yup.string()
+        .required('Dirección es requerida'),
+    telefono: Yup.string()
+        .required('Teléfono es requerido'),
     email: Yup.string()
         .email('Email no tiene la forma adecuada').required('Email es requerido'),
     pass: Yup.string()
@@ -32,20 +58,27 @@ const FormValidationSchema = Yup.object().shape({
 })
 export default function Register() {
     const navigation = useNavigation()
-    const route = useRoute()
     const [showPass, setShowPass] = useState<boolean>(false)
     const [nombreFocused, setNombreFocused] = useState(false);
     const [apellidoFocused, setApellidoFocused] = useState(false);
     const [emailFocused, setEmailFocused] = useState(false);
     const [passwordFocused, setPasswordFocused] = useState(false);
+    const [direccionFocused, setDireccionFocused] = useState(false);
+    const [telefonoFocused, setTelefonoFocused] = useState(false);
+    const [descripcionFocused, setDescripcionFocused] = useState(false);
 
     const handleRegister = (values: IFormValues) => {
-        console.log(values)
+        Alert.alert('REGISTRO EXITOSO', 'Tu cuenta ha sido creada exitosamente',
+            [
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        console.log('OK Pressed')
+                        navigation.navigate(AUTH_ROUTES.LOGIN as never);
+                    }
+                },
+            ]);
     }
-
-    useEffect(() => {
-        console.log(route.params)
-    }, [route]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -54,14 +87,15 @@ export default function Register() {
                 style={styles.keyboardView}
                 enabled={true}
             >
+                <Header />
                 <ScrollView
                     contentContainerStyle={styles.scrollContainer}
                     keyboardShouldPersistTaps="handled"
                     showsVerticalScrollIndicator={false}
                 >
-                    <Header />
+
                     <Formik
-                        initialValues={{ nombre: '', apellido: '', email: '', pass: '' }}
+                        initialValues={{ nombre: '', apellido: '', direccion: '', telefono: '', email: '', pass: '', descripcion: '' }}
                         validationSchema={FormValidationSchema}
                         validateOnMount={false}
                         onSubmit={handleRegister}
@@ -110,6 +144,42 @@ export default function Register() {
                                         onFocus={() => setApellidoFocused(true)}
                                     />
                                     {errors && <Text style={styles.error}>{errors.apellido}</Text>}
+                                </View>
+
+                                <View style={styles.inputContainer}>
+                                    <TextInput
+                                        style={[
+                                            styles.input,
+                                            direccionFocused && styles.inputFocused,
+                                        ]}
+                                        placeholder="Dirección"
+                                        value={values.direccion}
+                                        onChangeText={handleChange('direccion')}
+                                        onBlur={(e) => {
+                                            handleBlur('direccion')(e);
+                                            setDireccionFocused(false);
+                                        }}
+                                        onFocus={() => setDireccionFocused(true)}
+                                    />
+                                    {errors && <Text style={styles.error}>{errors.direccion}</Text>}
+                                </View>
+
+                                <View style={styles.inputContainer}>
+                                    <TextInput
+                                        style={[
+                                            styles.input,
+                                            telefonoFocused && styles.inputFocused,
+                                        ]}
+                                        placeholder="Teléfono"
+                                        value={values.telefono}
+                                        onChangeText={handleChange('telefono')}
+                                        onBlur={(e) => {
+                                            handleBlur('telefono')(e);
+                                            setTelefonoFocused(false);
+                                        }}
+                                        onFocus={() => setTelefonoFocused(true)}
+                                    />
+                                    {errors && <Text style={styles.error}>{errors.telefono}</Text>}
                                 </View>
 
                                 <View style={styles.inputContainer}>
@@ -167,6 +237,23 @@ export default function Register() {
                                     {errors && <Text style={styles.error}>{errors.pass}</Text>}
                                 </View>
 
+                                <View style={styles.inputContainer}>
+                                    <TextInput
+                                        style={[
+                                            styles.textArea, styles.input,
+                                        ]}
+                                        placeholder="Cuentanos de ti..."
+                                        value={values.descripcion}
+                                        onChangeText={handleChange('descripcion')}
+                                        onBlur={(e) => {
+                                            handleBlur('descripcion')(e);
+                                            setDescripcionFocused(false);
+                                        }}
+                                        onFocus={() => setDescripcionFocused(true)}
+                                    />
+                                    {/* {errors && <Text style={styles.error}>{errors.direccion}</Text>} */}
+                                </View>
+
                                 <Button onPress={handleSubmit} disabled={!isValid || isSubmitting} title="Registrarse!" />
 
                                 <View style={styles.linksContainer}>
@@ -195,7 +282,7 @@ const styles = StyleSheet.create({
     formContainer: {
         flex: 1,
         paddingHorizontal: 24,
-        paddingTop: 40,
+        paddingTop: 30,
         paddingBottom: 20,
     },
     linksContainer: {
@@ -209,9 +296,9 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#E5E7EB',
         borderRadius: 12,
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        fontSize: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        fontSize: 14,
         backgroundColor: '#F9FAFB',
         color: '#1F2937',
     },
@@ -236,13 +323,19 @@ const styles = StyleSheet.create({
     eyeIcon: {
         position: 'absolute',
         right: 16,
-        top: 12,
-        padding: 4,
+        top: 10,
+        padding: 2,
     },
     error: {
         color: materialColors.schemes.light.error,
         fontSize: 12,
         marginTop: 1,
         marginLeft: 4,
+    },
+    textArea: {
+        height: 140,
+        textAlignVertical: 'top',
+        paddingTop: 16,
+        marginBottom: 5,
     }
 })
