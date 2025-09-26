@@ -27,10 +27,13 @@
     "yup": "^1.7.0",
     "expo-secure-store": "~15.0.7",
     "expo-splash-screen": "~31.0.10"
+    "styled-components": "^6.1.19",
+    "yup": "^1.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@types/react": "~19.1.0",
+    "@types/styled-components-react-native": "^5.2.5",
     "typescript": "~5.9.2"
   },
   "private": true
