@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { Formik } from "formik"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import {
     KeyboardAvoidingView,
     ScrollView,
@@ -8,7 +8,8 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet,
+    Alert
 } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import * as Yup from 'yup'
@@ -18,6 +19,7 @@ import { AUTH_ROUTES } from "../../../utils/constants"
 import Header from "../../../components/Header"
 import Link from "../../../components/Link"
 import { materialColors } from "../../../utils/colors"
+import { AUTH_ACTIONS, AuthContext } from "../../../shares/context"
 
 interface IFormValues {
     email: string
@@ -38,9 +40,23 @@ export default function LoginFormik() {
     const [showPassword, setShowPassword] = useState(false);
     const [emailFocused, setEmailFocused] = useState(false); // Agregado para el estilo del label cuando el input tiene el foco
     const [passwordFocused, setPasswordFocused] = useState(false); // Agregado para el estilo del label cuando el input tiene el foco
+    const { state, dispatch } = useContext(AuthContext)
 
-    const handleLogin = (values: IFormValues) => {
-        console.log(values)
+
+    const handleLogin = () => {
+        dispatch({
+            type: AUTH_ACTIONS.LOGIN,
+            payload: {
+                token: 'TOKEN',
+                refreshToken: 'REFRESH_TOKEN',
+                user: {
+                    id: "ID",
+                    nombre: 'Martin',
+                    apellido: 'Forissi',
+                    email: 'forissimartin@gmail.com',
+                }
+            }
+        })
     }
 
     const handleGoToRegister = () => {
@@ -49,7 +65,14 @@ export default function LoginFormik() {
     }
 
     const handleGoToForgotPassword = () => {
-        console.log('handleGoToForgotPassword')
+        Alert.alert('RECUPERAR CONTRASEÑA', 'En construccion...', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ]);
     }
 
     return (

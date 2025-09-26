@@ -5,6 +5,7 @@ import { materialColors } from '../../../../utils/colors';
 import FilterBar from '../../../../components/FilterBar';
 import { fetchPets } from '../../../../utils/helpers/petfinderHelpers';
 import PetsList from '../../../../utils/helpers/PetsList';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const animalTypes = [
     { key: 'dog', label: 'Perros' },
@@ -17,7 +18,7 @@ export default function HomeScreen() {
     const [loading, setLoading] = useState(true);
     const [selectedType, setSelectedType] = useState<string>("dog");
 
-  useEffect(() => {
+    useEffect(() => {
         const loadPets = async () => {
             setLoading(true);
             try {
@@ -34,19 +35,19 @@ export default function HomeScreen() {
     }, [selectedType]);
 
     return (
-       <>
-  <Header />
-  <View style={styles.container}>
-    <FilterBar 
-      animalTypes={animalTypes} 
-      selectedType={selectedType} 
-      onSelectType={setSelectedType} 
-    />
+        <SafeAreaView style={{ flex: 1 }}>
+            <Header />
+            <View style={styles.container}>
+                <FilterBar
+                    animalTypes={animalTypes}
+                    selectedType={selectedType}
+                    onSelectType={setSelectedType}
+                />
 
-    
-    <PetsList type={selectedType} />
-  </View>
-</>
+
+                <PetsList type={selectedType} />
+            </View>
+        </SafeAreaView>
     );
 }
 
