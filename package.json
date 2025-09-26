@@ -27,7 +27,7 @@
     "yup": "^1.7.0",
     "expo-secure-store": "~15.0.7",
     "expo-splash-screen": "~31.0.10",
-    "styled-components": "^6.1.19",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
