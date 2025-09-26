@@ -16,7 +16,7 @@ interface State {
     refreshToken: string | null;
 }
 
-const initialState: State = {
+const initialState = {
     isLoading: false,
     token: null,
     user: null,

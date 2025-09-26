@@ -6,7 +6,7 @@ import AuthStackScreen from './auth';
 import DetalleMascota from './tabs/screens/detalleMascota';
 import { RootStackParamList } from '../utils/RootStackParamList';
 import { AUTH_ACTIONS, AuthContext } from '../shares/context';
-import { getUser } from '../utils/secure-store';
+import { deleteUser, getUser } from '../utils/secure-store';
 import * as SplashScreen from 'expo-splash-screen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -18,6 +18,7 @@ export default function Root() {
 
     useEffect(() => {
         if (state?.user) {
+            console.log("Root user", state.user);
             setIsSigned(true);
         } else {
             setIsSigned(false);
