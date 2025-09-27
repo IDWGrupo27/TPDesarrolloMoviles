@@ -27,10 +27,20 @@ Se conecta a la API de Petfinder para mostrar mascotas y refugios disponibles.
 Los usuarios pueden registrarse e iniciar sesión para personalizar su experiencia.
 
 ### Mínimo de 4 pantallas
+- Login
+- <img width="235" height="500" alt="login" src="https://github.com/user-attachments/assets/f847b394-d59f-4329-8852-5966b23607f0" />
+
+- Registro
+- ![registro](https://github.com/user-attachments/assets/b39ddb21-38b8-46a1-90bb-b20c655a0e10)
+
 - Pantalla de inicio
-- Búsqueda de mascotas
-- Detalle de mascota
-- Listado de refugios
+- ![home](https://github.com/user-attachments/assets/6cfee41f-01d6-49fa-bcda-85020c0d22cd)
+
+- Nosotros
+- ![nosotros](https://github.com/user-attachments/assets/c6ad6952-9b0d-42a7-ae30-86e348f7834d)
+
+- Perfil
+- ![perfil](https://github.com/user-attachments/assets/a79ef4d9-f1cb-4da0-9b3d-3f7a58aaa61b)
 
 ### Mapas y geolocalización
 Muestra mascotas y refugios cercanos según la ubicación del usuario.
@@ -60,5 +70,6 @@ Búsqueda por filtros avanzados, scroll infinito y perfiles de refugios.
 - Obtener lista de refugios y organizaciones
 
 ---
+
 
 *Desarrollado para conectar mascotas con familias amorosas* ❤️
