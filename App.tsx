@@ -12,5 +12,6 @@ export default function App() {
         <Root />
       </AuthProvider>
     </NavigationContainer>
+
   );
 }

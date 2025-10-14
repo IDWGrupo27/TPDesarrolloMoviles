@@ -13,6 +13,7 @@ import { useRoute } from '@react-navigation/native';
 import { Pet } from '../../../../utils/helpers/petfinderHelpers';
 import { translateGender, translateSize } from '../../../../utils/helpers/translatePet';
 import AspectRatioImage from '../../../../components/AspectRatioImage';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type RouteParams = {
   pet: Pet;
@@ -31,6 +32,7 @@ export default function DetalleMascota() {
   return (
     <>
       <Header />
+
       <ScrollView contentContainerStyle={styles.container}>
         {/* Carrusel de fotos */}
         {pet.photos && pet.photos.length > 0 && (
@@ -103,6 +105,7 @@ export default function DetalleMascota() {
           </View>
         </Modal>
       </ScrollView>
+
     </>
   );
 }

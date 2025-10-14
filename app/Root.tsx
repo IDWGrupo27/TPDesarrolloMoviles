@@ -30,8 +30,8 @@ export default function Root() {
             if (user) {
                 dispatch({ type: AUTH_ACTIONS.SET_USER, payload: { user } });
                 setIsSigned(true);
-                SplashScreen.hideAsync();
             }
+            SplashScreen.hideAsync();
         });
     }, []);
 
@@ -40,6 +40,7 @@ export default function Root() {
             initialRouteName={isSigned ? "TABS" : "AUTH"}
             screenOptions={{ headerShown: false }}
         >
+
             {isSigned ? (
                 <>
                     <Stack.Screen name="TABS" component={TabsScreen} />
@@ -48,6 +49,8 @@ export default function Root() {
             ) : (
                 <Stack.Screen name="AUTH" component={AuthStackScreen} />
             )}
+
         </Stack.Navigator>
+
     );
 }
