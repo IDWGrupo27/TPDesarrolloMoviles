@@ -1,10 +1,16 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { materialColors } from "../../utils/colors";
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { useContext } from "react";
 import { AUTH_ACTIONS, AuthContext } from "../../shares/context";
 import Logout from "../Logout";
+import { useRoute } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
+
+interface LogoutProps {
+    logout: () => void;
+}
 
 export default function Header() {
 
@@ -30,7 +36,7 @@ export default function Header() {
 
             <Text style={styles.appSubtitle}>Encuentra tu compañero ideal</Text>
 
-            {state?.user ? <Logout logout={handleLogout} /> : null}
+            <Logout logout={handleLogout} />
 
         </LinearGradient>
 
