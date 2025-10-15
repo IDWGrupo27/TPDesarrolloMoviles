@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AUTH_ACTIONS, AuthContext } from "../../shares/context";
 import { TouchableOpacity } from "react-native";
 import Perfil from "./screens/perfil";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,11 +15,12 @@ export default function TabsScreen() {
 
     const { state, dispatch } = useContext(AuthContext);
 
-    const handleLogout = () => {
-        dispatch({ type: AUTH_ACTIONS.LOGOUT })   // Implement logout functionality here
-    }
+    // const handleLogout = () => {
+    //     dispatch({ type: AUTH_ACTIONS.LOGOUT })   // Implement logout functionality here
+    // }
 
     return (
+
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 headerShown: false,
@@ -56,5 +58,6 @@ export default function TabsScreen() {
                 }}
             />
         </Tab.Navigator>
+
     )
 }

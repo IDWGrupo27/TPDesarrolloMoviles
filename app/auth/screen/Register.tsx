@@ -8,7 +8,7 @@ import {
     ScrollView,
     Alert
 } from "react-native";
-import { useState } from "react";
+import { use, useContext, useState } from "react";
 import Link from "../../../components/Link";
 import Button from "../../../components/Button";
 import { materialColors } from "../../../utils/colors";
@@ -19,6 +19,9 @@ import { AUTH_ROUTES } from "../../../utils/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../../../components/Header";
+import { setUser, STORAGE_KEYS } from "../../../utils/secure-store";
+import * as SecureStore from 'expo-secure-store';
+import { AUTH_ACTIONS, AuthContext } from "../../../shares/context";
 
 interface IFormValues {
     nombre: string
@@ -66,20 +69,53 @@ export default function Register() {
     const [direccionFocused, setDireccionFocused] = useState(false);
     const [telefonoFocused, setTelefonoFocused] = useState(false);
     const [descripcionFocused, setDescripcionFocused] = useState(false);
+    const { state, dispatch } = useContext(AuthContext)
 
-    const handleRegister = (values: IFormValues) => {
-        Alert.alert('REGISTRO EXITOSO', 'Tu cuenta ha sido creada exitosamente',
-            [
-                {
-                    text: 'OK',
-                    onPress: () => {
-                        console.log('OK Pressed')
-                        navigation.navigate(AUTH_ROUTES.LOGIN as never);
-                    }
-                },
-            ]);
+    const handleRegister = async (values: IFormValues) => {
+
+        try {
+
+            const registroData = {
+                token: 'TOKEN',
+                refreshToken: 'REFRESH_TOKEN',
+                user: {
+                    id: 1,
+                    nombre: values.nombre,
+                    apellido: values.apellido,
+                    direccion: values.direccion,
+                    telefono: values.telefono,
+                    email: values.email,
+                    descripcion: values.descripcion,
+                    pass: values.pass
+                }
+            };
+
+            // Guardar en secureStorage
+            await setUser(registroData.user);
+            await SecureStore.setItemAsync(`PETWAY_${STORAGE_KEYS.JWT_TOKEN}`, registroData.token);
+            await SecureStore.setItemAsync(`PETWAY_${STORAGE_KEYS.JWT_REFRESH_TOKEN}`, registroData.refreshToken);
+
+            // Login automático
+            dispatch({
+                type: AUTH_ACTIONS.LOGIN,
+                payload: registroData
+            });
+
+            Alert.alert('REGISTRO EXITOSO', 'Tu cuenta ha sido creada exitosamente',
+                [
+                    {
+                        text: 'OK',
+                        onPress: () => {
+                            console.log('OK Pressed')
+                            navigation.navigate(AUTH_ROUTES.LOGIN as never);
+                        }
+                    },
+                ]);
+        } catch (error) {
+            Alert.alert('Error', 'No se pudo completar el registro');
+            console.error('Register error:', error);
+        }
     }
-
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
@@ -267,6 +303,7 @@ export default function Register() {
         </SafeAreaView>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {
