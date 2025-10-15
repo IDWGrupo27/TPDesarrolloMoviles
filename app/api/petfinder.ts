@@ -10,8 +10,10 @@ export async function getAccessToken(): Promise<string> {
         body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
     });
 
+    
     if (!response.ok) throw new Error("No se pudo obtener token");
-
+    
     const data = await response.json();
+    console.log(data);
     return data.access_token;
 }

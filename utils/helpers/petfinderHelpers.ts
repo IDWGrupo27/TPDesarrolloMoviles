@@ -1,3 +1,4 @@
+//petfinderHelpers.tsx
 import { getAccessToken } from "../../app/api/petfinder";
 
 export interface Pet {
@@ -17,5 +18,6 @@ export async function fetchPets(type: string, page = 1, limit = 20): Promise<Pet
     if (!res.ok) throw new Error("Error al obtener mascotas");
 
     const data = await res.json();
+    console.log(data);
     return (data.animals || []).filter((p: Pet) => p.photos && p.photos.length > 0);
 }

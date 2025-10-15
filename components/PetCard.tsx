@@ -3,14 +3,10 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/RootStackParamList';
 import AspectRatioImage from './AspectRatioImage'; 
+import { Pet} from "../utils/helpers/petfinderHelpers";
 
 interface PetCardProps {
-    pet: {
-        id: number;
-        name: string;
-        photos: { medium: string }[];
-        [key: string]: any;
-    }
+    pet:Pet;
 }
 
 export default function PetCard({ pet }: PetCardProps) {

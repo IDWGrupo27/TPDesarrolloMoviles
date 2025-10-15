@@ -14,25 +14,8 @@ const animalTypes = [
 ];
 
 export default function HomeScreen() {
-    const [pets, setPets] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    
     const [selectedType, setSelectedType] = useState<string>("dog");
-
-    useEffect(() => {
-        const loadPets = async () => {
-            setLoading(true);
-            try {
-                const data = await fetchPets(selectedType);
-                setPets(data);
-            } catch (error) {
-                console.error("Error al obtener mascotas:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        loadPets();
-    }, [selectedType]);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -43,8 +26,6 @@ export default function HomeScreen() {
                     selectedType={selectedType}
                     onSelectType={setSelectedType}
                 />
-
-
                 <PetsList type={selectedType} />
             </View>
         </SafeAreaView>
