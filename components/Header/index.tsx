@@ -1,18 +1,34 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { materialColors } from "../../utils/colors";
 import { Ionicons } from '@expo/vector-icons';
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AUTH_ACTIONS, AuthContext } from "../../shares/context";
 import Logout from "../Logout";
 import { useRoute } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
+import Menu from "../Menu";
 
 interface LogoutProps {
     logout: () => void;
 }
 
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
+
+
 export default function Header() {
+
+    const [isPressed, setIsPressed] = useState<boolean>(false)
+    
+        const handleMenu = () => {
+            if (!isPressed) {
+                setIsPressed(true)
+            } else {
+                setIsPressed(false)
+            }
+        }
 
     const { state, dispatch } = useContext(AuthContext);
 
@@ -27,6 +43,7 @@ export default function Header() {
             end={{ x: 1, y: 1 }}
             style={styles.header}
         >
+            <Menu onPress={handleMenu} press={isPressed} style={isPressed ? styles.showMenu : { position: "absolute", left: 0, top: 0 }} />
 
             <View style={styles.logo}>
                 <Ionicons name="paw" size={30} color={materialColors.schemes.dark.onPrimary} />
@@ -82,4 +99,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 5,
     },
+    
+    showMenu: {
+        width: screenWidth / 2,
+        height: screenHeight,
+        backgroundColor: '#7a4f81e3',
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        zIndex: 1,
+    },
+
+
 });
