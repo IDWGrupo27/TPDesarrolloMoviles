@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import Header from './components/Header';
 import Root from './app/Root';
 import { NavigationContainer } from '@react-navigation/native';
-import { AuthContext, AuthProvider } from './shares/context';
+import {AuthProvider } from './shares/context';
+import './app/services/i18n';
 
 export default function App() {
   return (

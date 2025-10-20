@@ -14,11 +14,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function Root() {
 
     const { state, dispatch } = useContext(AuthContext);
-    const [isSigned, setIsSigned] = useState(true);
+    const [isSigned, setIsSigned] = useState(false);
 
     useEffect(() => {
         if (state?.user) {
-            console.log("Root user", state.user);
             setIsSigned(true);
         } else {
             setIsSigned(false);
