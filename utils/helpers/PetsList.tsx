@@ -59,8 +59,3 @@ export default function PetsList({ type }: { type: string }) {
         />
     );
 }
-
-
-// useState → guarda valores que disparan render cuando cambian.
-// useRef → guarda valores mutables que NO disparan render.
-// useEffect → corre código después del render, para efectos secundarios o cuando cambian dependencias.
