@@ -1,4 +1,4 @@
-
+//translatePet.ts
 export function translateGender(gender: string) {
   switch (gender.toLowerCase()) {
     case 'male': return 'Macho';
