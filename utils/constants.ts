@@ -5,7 +5,8 @@ export const ROOT_ROUTES = {
 
 export const AUTH_ROUTES = {
     LOGIN: "login",
-    REGISTER: "register"
+    REGISTER: "register",
+    FORGOT_PASSWORD: "ForgotPassword"
 }
 
 export const TAB_ROUTES = {

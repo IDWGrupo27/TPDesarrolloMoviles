@@ -9,7 +9,7 @@ import {
   ScrollView,
   Alert
 } from "react-native";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Link from "../../../components/Link";
 import Button from "../../../components/Button";
 import { materialColors } from "../../../utils/colors";
@@ -20,7 +20,6 @@ import { AUTH_ROUTES } from "../../../utils/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../../../components/Header";
-import { AuthContext } from "../../../shares/context";
 import { signUpWithProfile } from '../../api/auth';
 
 interface IFormValues {
@@ -51,8 +50,6 @@ export default function Register() {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [direccionFocused, setDireccionFocused] = useState(false);
   const [telefonoFocused, setTelefonoFocused] = useState(false);
-  const [descripcionFocused, setDescripcionFocused] = useState(false);
-  const { dispatch } = useContext(AuthContext);
 
   const handleRegister = async (values: IFormValues) => {
     const { error, user } = await signUpWithProfile({
@@ -61,8 +58,7 @@ export default function Register() {
       nombre: values.nombre,
       apellido: values.apellido,
       direccion: values.direccion,
-      telefono: values.telefono,
-      descripcion: values.descripcion, // opcional
+      telefono: values.telefono, 
     });
 
     if (error) {
@@ -83,7 +79,7 @@ export default function Register() {
         <Header />
         <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
           <Formik
-            initialValues={{ nombre: '', apellido: '', direccion: '', telefono: '', email: '', pass: '', descripcion: '' }}
+            initialValues={{ nombre: '', apellido: '', direccion: '', telefono: '', email: '', pass: '' }}
             validationSchema={FormValidationSchema}
             validateOnMount={false}
             onSubmit={handleRegister}
@@ -180,18 +176,6 @@ export default function Register() {
                     </TouchableOpacity>
                   </View>
                   {errors.pass && <Text style={styles.error}>{errors.pass}</Text>}
-                </View>
-
-                {/* Descripción */}
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={[styles.textArea, styles.input]}
-                    placeholder="Cuentanos de ti..."
-                    value={values.descripcion}
-                    onChangeText={handleChange('descripcion')}
-                    onBlur={(e) => { handleBlur('descripcion')(e); setDescripcionFocused(false); }}
-                    onFocus={() => setDescripcionFocused(true)}
-                  />
                 </View>
 
                 <Button onPress={handleSubmit} disabled={!isValid || isSubmitting} title="Registrarse!" />

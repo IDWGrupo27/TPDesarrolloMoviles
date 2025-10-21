@@ -90,12 +90,10 @@ export default function LoginFormik() {
         navigation.navigate(AUTH_ROUTES.REGISTER, { name: 'register' });
     };
 
-    const handleGoToForgotPassword = () => {
-        Alert.alert('RECUPERAR CONTRASEÑA', 'En construcción...', [
-            { text: 'Cancel', style: 'cancel' },
-            { text: 'OK' }
-        ]);
-    };
+   const handleGoToForgotPassword = () => {
+    //@ts-ignore
+    navigation.navigate("ForgotPassword"); // Usa el nombre que le diste en el Stack.Screen
+};
 
     return (
         <SafeAreaView style={styles.container}>
