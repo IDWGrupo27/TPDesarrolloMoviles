@@ -1,9 +1,10 @@
 import { Pet } from './helpers/petfinderHelpers'; 
 
 export type RootStackParamList = {
-    TABS: undefined;
-    AUTH: undefined;
-    DetalleMascota: { pet: Pet }; 
+  TABS: undefined;
+  AUTH: undefined;
+  DetalleMascota: { pet: Pet }; 
+  NewPassword: undefined;
 };
 
 export type AuthStackParamList = {
