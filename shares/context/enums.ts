@@ -1,3 +1,4 @@
+//enums.ts
 export enum AUTH_ACTIONS {
     LOGIN = 'LOGIN',
     LOGOUT = 'LOGOUT',
@@ -5,4 +6,6 @@ export enum AUTH_ACTIONS {
     SET_USER = 'SET_USER',
     SET_LOADING = 'SET_LOADING',
     SET_ASSETS_LOADING = 'SET_ASSETS_LOADING',
+    ENTER_RECOVERY = 'ENTER_RECOVERY', 
+    EXIT_RECOVERY = 'EXIT_RECOVERY',
 }

@@ -15,9 +15,6 @@ export default function TabsScreen() {
 
     const { state, dispatch } = useContext(AuthContext);
 
-    // const handleLogout = () => {
-    //     dispatch({ type: AUTH_ACTIONS.LOGOUT })   // Implement logout functionality here
-    // }
 
     return (
 

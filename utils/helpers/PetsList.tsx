@@ -21,8 +21,6 @@ export default function PetsList({ type }: { type: string }) {
             newPets.forEach(p => seenIds.current.add(p.id));
 
             setPets(prev => [...prev, ...newPets]);
-
-            // Si no hay más mascotas en la página, queda hasMore = false
             setHasMore(fetched.length > 0);
         } catch (err) {
             console.error("Error cargando mascotas:", err);
@@ -31,7 +29,6 @@ export default function PetsList({ type }: { type: string }) {
         }
     };
 
-    // Reset cuando cambia tipo
     useEffect(() => {
         seenIds.current.clear();
         setPets([]);

@@ -1,5 +1,3 @@
-// app/auth/screen/ForgotPassword.tsx
-
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Alert, KeyboardAvoidingView, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,37 +11,47 @@ import Link from "../../../components/Link";
 import { supabase } from "../../api/supabaseClient";
 import { materialColors } from "../../../utils/colors";
 
-// --- 1. Reglas de Validación (solo para el email) ---
+// --- 1. Reglas de Validación ---
 const ForgotPasswordSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Formato de email incorrecto')
-    .required('El email es requerido'),
+  email: Yup.string().email('Formato de email incorrecto').required('El email es requerido'),
 });
 
 export default function ForgotPassword() {
   const navigation = useNavigation();
   const [emailFocused, setEmailFocused] = useState(false);
 
-  // --- 2. La Lógica para llamar a Supabase ---
+  // --- 2. Lógica para llamar a Supabase ---
   const handlePasswordReset = async (values: { email: string }, { setSubmitting }: any) => {
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(values.email, {
-        redirectTo: '', // Puedes dejar esto vacío por ahora
+      // Usamos signInWithOtp (Magic Link) para enviar el código de seguridad
+      const { error } = await supabase.auth.signInWithOtp({
+          email: values.email,
+          options: {
+              
+          },
       });
 
       if (error) {
         Alert.alert('Error', error.message);
       } else {
+        // 3. Navegar a la pantalla donde el usuario pegará el token
         Alert.alert(
-          'Revisa tu correo',
-          'Si existe una cuenta con ese email, hemos enviado las instrucciones para restablecer tu contraseña.'
+          'Código Enviado',
+          'Hemos enviado un código de seguridad a tu email. Cópialo para usarlo en la siguiente pantalla.',
+          [{ 
+            text: "OK",
+            onPress: () => {
+              // Navegamos a la pantalla NewPassword, pasando el email para que el usuario no lo reingrese
+              // @ts-ignore
+              navigation.navigate('NewPassword', { email: values.email }); 
+            }
+          }]
         );
-        navigation.goBack(); // Vuelve a la pantalla de Login
       }
     } catch (e: any) {
       Alert.alert('Error', 'Algo salió mal. Intenta nuevamente.');
     } finally {
-      setSubmitting(false); // Le decimos a Formik que terminamos
+      setSubmitting(false);
     }
   };
 
@@ -53,7 +61,6 @@ export default function ForgotPassword() {
         <Header />
         <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
           
-          {/* --- 3. El Cerebro del Formulario --- */}
           <Formik
             initialValues={{ email: '' }}
             validationSchema={ForgotPasswordSchema}
@@ -63,29 +70,25 @@ export default function ForgotPassword() {
               <View style={styles.formContainer}>
                 <Text style={styles.title}>Recuperar Contraseña</Text>
                 <Text style={styles.subtitle}>
-                  Ingresa tu email y te enviaremos las instrucciones para restablecer tu contraseña.
+                  Ingresa tu email y te enviaremos un código de seguridad.
                 </Text>
 
-                {/* --- 4. La Parte Visual del Formulario --- */}
                 <View style={styles.inputContainer}>
-                  <Text style={[styles.label, emailFocused && styles.labelFocused]}>
-                    Email
-                  </Text>
+                  <Text style={[styles.label, emailFocused && styles.labelFocused]}>Email</Text>
                   <TextInput
                     style={[styles.input, emailFocused && styles.inputFocused]}
                     keyboardType="email-address"
                     autoCapitalize="none"
-                    autoCorrect={false}
-                    value={values.email}
                     onBlur={(e) => { handleBlur('email')(e); setEmailFocused(false); }}
                     onChangeText={handleChange('email')}
                     onFocus={() => setEmailFocused(true)}
+                    value={values.email}
                     placeholder="tu@email.com"
                   />
                   {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
                 </View>
 
-                <Button onPress={handleSubmit} disabled={!isValid || isSubmitting} title="Enviar Instrucciones" />
+                <Button onPress={handleSubmit} disabled={!isValid || isSubmitting} title="Enviar Código" />
 
                 <View style={styles.linksContainer}>
                   <Link link="Volver al Login" onPress={() => navigation.goBack()} />
@@ -99,8 +102,7 @@ export default function ForgotPassword() {
     </SafeAreaView>
   );
 }
-
-// --- 5. Estilos (muy parecidos a los de tu Login) ---
+// --- 5. Estilos ---
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: materialColors.schemes.light.background },
   keyboardView: { flex: 1 },

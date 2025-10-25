@@ -1,13 +1,17 @@
+//constants.ts
 export const ROOT_ROUTES = {
     AUTH: "auth",
     TABS: "tabs",
 }
 
 export const AUTH_ROUTES = {
-    LOGIN: "login",
-    REGISTER: "register",
-    FORGOT_PASSWORD: "ForgotPassword"
-}
+  LOGIN: "Login",
+  REGISTER: "Register",
+  FORGOT_PASSWORD: "ForgotPassword",
+  NEW_PASSWORD: "NewPassword",
+};
+
+
 
 export const TAB_ROUTES = {
     HOME: 'home',

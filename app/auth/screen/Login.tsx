@@ -33,7 +33,7 @@ const validationSchema = Yup.object().shape({
         .required('El campo Contraseña, no puede estar vacio')
 });
 
-export default function LoginFormik() {
+export default function Login() {
     const navigation = useNavigation();
     const [showPassword, setShowPassword] = useState(false);
     const [emailFocused, setEmailFocused] = useState(false);
@@ -92,7 +92,7 @@ export default function LoginFormik() {
 
    const handleGoToForgotPassword = () => {
     //@ts-ignore
-    navigation.navigate("ForgotPassword"); // Usa el nombre que le diste en el Stack.Screen
+    navigation.navigate("ForgotPassword"); 
 };
 
     return (

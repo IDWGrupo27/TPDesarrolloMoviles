@@ -1,4 +1,3 @@
-// screens/auth/Register.tsx
 import {
   View,
   Text,
@@ -27,7 +26,6 @@ interface IFormValues {
   apellido: string
   direccion: string
   telefono: string
-  descripcion?: string
   email: string
   pass: string
 }
@@ -50,6 +48,8 @@ export default function Register() {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [direccionFocused, setDireccionFocused] = useState(false);
   const [telefonoFocused, setTelefonoFocused] = useState(false);
+
+  const placeholderColor = materialColors.schemes.light.outline;
 
   const handleRegister = async (values: IFormValues) => {
     const { error, user } = await signUpWithProfile({
@@ -86,11 +86,15 @@ export default function Register() {
           >
             {({ handleChange, handleSubmit, handleBlur, errors, isValid, isSubmitting, values }) => (
               <View style={styles.formContainer}>
+                <Text style={styles.title}>Crea tu Cuenta PetWay</Text>
+
                 {/* Nombre */}
                 <View style={styles.inputContainer}>
+                  <Text style={[styles.label, nombreFocused && styles.labelFocused]}>Nombre</Text>
                   <TextInput
                     style={[styles.input, nombreFocused && styles.inputFocused]}
-                    placeholder="Nombre"
+                    placeholder="Tu nombre"
+                    placeholderTextColor={nombreFocused ? materialColors.schemes.light.primary : placeholderColor}
                     value={values.nombre}
                     onChangeText={handleChange('nombre')}
                     onBlur={(e) => { handleBlur('nombre')(e); setNombreFocused(false); }}
@@ -101,9 +105,11 @@ export default function Register() {
 
                 {/* Apellido */}
                 <View style={styles.inputContainer}>
+                  <Text style={[styles.label, apellidoFocused && styles.labelFocused]}>Apellido</Text>
                   <TextInput
                     style={[styles.input, apellidoFocused && styles.inputFocused]}
-                    placeholder="Apellido"
+                    placeholder="Tu apellido"
+                    placeholderTextColor={apellidoFocused ? materialColors.schemes.light.primary : placeholderColor}
                     value={values.apellido}
                     onChangeText={handleChange('apellido')}
                     onBlur={(e) => { handleBlur('apellido')(e); setApellidoFocused(false); }}
@@ -114,9 +120,11 @@ export default function Register() {
 
                 {/* Dirección */}
                 <View style={styles.inputContainer}>
+                  <Text style={[styles.label, direccionFocused && styles.labelFocused]}>Dirección</Text>
                   <TextInput
                     style={[styles.input, direccionFocused && styles.inputFocused]}
-                    placeholder="Dirección"
+                    placeholder="Tu dirección completa"
+                    placeholderTextColor={direccionFocused ? materialColors.schemes.light.primary : placeholderColor}
                     value={values.direccion}
                     onChangeText={handleChange('direccion')}
                     onBlur={(e) => { handleBlur('direccion')(e); setDireccionFocused(false); }}
@@ -127,9 +135,12 @@ export default function Register() {
 
                 {/* Teléfono */}
                 <View style={styles.inputContainer}>
+                  <Text style={[styles.label, telefonoFocused && styles.labelFocused]}>Teléfono</Text>
                   <TextInput
                     style={[styles.input, telefonoFocused && styles.inputFocused]}
-                    placeholder="Teléfono"
+                    placeholder="Tu número de teléfono"
+                    placeholderTextColor={telefonoFocused ? materialColors.schemes.light.primary : placeholderColor}
+                    keyboardType="phone-pad"
                     value={values.telefono}
                     onChangeText={handleChange('telefono')}
                     onBlur={(e) => { handleBlur('telefono')(e); setTelefonoFocused(false); }}
@@ -140,6 +151,7 @@ export default function Register() {
 
                 {/* Email */}
                 <View style={styles.inputContainer}>
+                  <Text style={[styles.label, emailFocused && styles.labelFocused]}>Email</Text>
                   <TextInput
                     keyboardType="email-address"
                     autoCapitalize="none"
@@ -150,16 +162,19 @@ export default function Register() {
                     onChangeText={handleChange('email')}
                     onFocus={() => setEmailFocused(true)}
                     placeholder="tu@email.com"
+                    placeholderTextColor={emailFocused ? materialColors.schemes.light.primary : placeholderColor}
                   />
                   {errors.email && <Text style={styles.error}>{errors.email}</Text>}
                 </View>
 
                 {/* Contraseña */}
                 <View style={styles.inputContainer}>
+                  <Text style={[styles.label, passwordFocused && styles.labelFocused]}>Contraseña</Text>
                   <View style={styles.passwordContainer}>
                     <TextInput
                       style={[styles.input, styles.passwordInput, passwordFocused && styles.inputFocused]}
-                      placeholder="Contraseña"
+                      placeholder="Mínimo 6 caracteres"
+                      placeholderTextColor={passwordFocused ? materialColors.schemes.light.primary : placeholderColor}
                       value={values.pass}
                       onChangeText={handleChange('pass')}
                       onBlur={(e) => { handleBlur('pass')(e); setPasswordFocused(false); }}
@@ -194,33 +209,50 @@ export default function Register() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: materialColors.schemes.light.background },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: materialColors.schemes.light.primary,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
   keyboardView: { flex: 1 },
-  scrollContainer: { flexGrow: 1 },
-  formContainer: { flex: 1, paddingHorizontal: 24, paddingTop: 30, paddingBottom: 20 },
+  scrollContainer: { flexGrow: 1, paddingVertical: 20 },
+  formContainer: { flex: 1, paddingHorizontal: 24, paddingTop: 10, paddingBottom: 20 },
   linksContainer: { marginTop: 32, alignItems: 'center' },
-  inputContainer: { marginBottom: 10 },
-  input: {
-    borderWidth: 2,
-    borderColor: '#E5E7EB',
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+  inputContainer: { marginBottom: 15 },
+  label: {
     fontSize: 14,
-    backgroundColor: '#F9FAFB',
-    color: '#1F2937',
+    fontWeight: '600',
+    color: materialColors.schemes.light.onBackground,
+    marginBottom: 5,
+    marginLeft: 2,
+  },
+  labelFocused: {
+    color: materialColors.schemes.light.primary,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: materialColors.schemes.light.outline,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    backgroundColor: materialColors.schemes.light.surface,
+    color: materialColors.schemes.light.onSurface,
   },
   inputFocused: {
     borderColor: materialColors.schemes.light.primary,
     backgroundColor: materialColors.schemes.light.background,
     shadowColor: materialColors.schemes.light.primary,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
   },
   passwordContainer: { position: 'relative' },
   passwordInput: { paddingRight: 50 },
-  eyeIcon: { position: 'absolute', right: 16, top: 10, padding: 2 },
-  error: { color: materialColors.schemes.light.error, fontSize: 12, marginTop: 1, marginLeft: 4 },
+  eyeIcon: { position: 'absolute', right: 16, top: 12, padding: 2 },
+  error: { color: materialColors.schemes.light.error, fontSize: 12, marginTop: 4, marginLeft: 4 },
   textArea: { height: 140, textAlignVertical: 'top', paddingTop: 16, marginBottom: 5 }
 });
