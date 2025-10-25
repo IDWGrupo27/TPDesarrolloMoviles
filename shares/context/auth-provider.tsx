@@ -1,14 +1,12 @@
 // shares/context/auth-provider.tsx
 
-import React, { createContext, useReducer, ReactNode } from "react"; // <-- Corregido: Imports de React
-import { Alert } from "react-native"; // <-- Corregido: Alert importado de react-native
-
-// Importaciones necesarias
+import React, { createContext, useReducer, ReactNode } from "react"; 
+import { Alert } from "react-native"; 
 import AuthContext from "./auth-context";
 import { AUTH_ACTIONS } from "./enums";
-import { AuthTokens, IUser } from "../models/users"; // <-- Asegurate que esta ruta sea correcta
+import { AuthTokens, IUser } from "../models/users"; 
 import { deleteUser, setUser } from "../../utils/secure-store";
-import { supabase } from "../../app/api/supabaseClient"; // <-- Asegurate que esta ruta sea correcta
+import { supabase } from "../../app/api/supabaseClient"; 
 
 
 interface Action {
@@ -36,7 +34,6 @@ const initialState: State = {
 export { AuthContext };
 const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer((prevState: State, action: Action): State => {
-        // Tu lógica de reducer queda igual
         console.log("AuthProvider action", action);
         console.log("AuthProvider prevState", prevState);
         const { payload } = action;
@@ -117,7 +114,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
     return (
-        // Pasamos la nueva función en el value
+        // Pasa la nueva función en el value
         <AuthContext.Provider value={{ state, dispatch, loginWithTokens }}> 
             {children}
         </AuthContext.Provider>

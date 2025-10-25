@@ -13,13 +13,11 @@ export default function Logout(props: LogoutProps) {
     const { dispatch } = useContext(AuthContext);
 
     const handleLogout = () => {
-        console.log("Logout button pressed"); // ✅ Debug
-
-        // Si viene por props, úsalo
+        console.log("Logout button pressed"); 
         if (logout) {
             logout();
         } else {
-            // Si no, usa el context
+            
             dispatch({ type: AUTH_ACTIONS.LOGOUT });
         }
     };

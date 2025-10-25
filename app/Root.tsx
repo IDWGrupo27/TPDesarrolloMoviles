@@ -3,8 +3,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useContext, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
-import { Alert } from 'react-native';
-
 import TabsScreen from './tabs';
 import AuthStackScreen from './auth';
 import DetalleMascota from './tabs/screens/detalleMascota';

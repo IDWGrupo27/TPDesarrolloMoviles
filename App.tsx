@@ -6,8 +6,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './shares/context';
 import './app/services/i18n';
 import { navigationRef } from './utils/NavigationService';
-
-// --- NUEVAS IMPORTACIONES DE LINKING ---
 import * as Linking from 'expo-linking';
 import { useContext } from 'react';
 import AuthContext from './shares/context/auth-context'; 
@@ -17,7 +15,7 @@ import { Buffer } from 'buffer';
 // Aplicamos el shim de Buffer
 global.Buffer = global.Buffer || Buffer; 
 
-// --- FUNCIÓN CLAVE 1: CORREGIR EL ENLACE ---
+// --- 1: CORREGIR EL ENLACE ---
 const parseSupabaseUrl = (url: string) => {
     let parsedUrl = url;
     if (url.includes("#")) {
@@ -45,7 +43,7 @@ export default function App() {
     
     const { loginWithTokens } = context; 
 
-    // --- FUNCIÓN CLAVE 2: OBTENER LINK INICIAL ---
+    // --- 2: OBTENER LINK INICIAL ---
     const getInitialURL = async () => {
         const url = await Linking.getInitialURL();
         if (url !== null) {
@@ -54,7 +52,7 @@ export default function App() {
         return url;
     };
     
-    // --- FUNCIÓN CLAVE 3: SUSCRIPCIÓN MANUAL ---
+    // --- 3: SUSCRIPCIÓN MANUAL ---
     const subscribe = (listener: (url: string) => void) => {
         const onReceiveURL = ({ url }: { url: string }) => {
             const transformedUrl = parseSupabaseUrl(url);
@@ -75,12 +73,12 @@ export default function App() {
         return () => { subscription.remove(); };
     };
 
-    // Configuramos el objeto linking
+    // Configuración del objeto linking
     const linking = {
         prefixes: [Linking.createURL("/")], 
         config: {
             screens: {
-                NewPassword: "reset-password", // Mapea petway://reset-password
+                NewPassword: "reset-password", 
             },
         },
         getInitialURL: getInitialURL, 

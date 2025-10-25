@@ -3,8 +3,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-// --- IMPORTA TUS ARCHIVOS DE TRADUCCIÓN ---
-// A medida que crees más archivos .json, los importas aquí.
+// ACÁ VAN LOS ARchivos que vamos creando  de .json
 import authEs from '../translations/es/auth.json';
 
 
@@ -13,7 +12,7 @@ const resources = {
   es: {
     auth: authEs,     // Namespace "auth"
   },
-  // Aquí agregarías otros idiomas en el futuro, por ejemplo 'en': { ... }
+  // acá se pueden agregar más idiomas a futuro, por ejemplo 'en': { ... }
 };
 
 i18n

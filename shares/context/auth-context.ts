@@ -1,7 +1,6 @@
 // shares/context/auth-context.ts
 
 import { Context, createContext } from "react";
-// Debes tener estos tipos disponibles en el contexto
 import { AuthTokens } from "../models/users"; 
 import { AUTH_ACTIONS } from "./enums"; 
 
@@ -10,7 +9,6 @@ import { AUTH_ACTIONS } from "./enums";
 interface AuthContextProps {
   state: any; 
   dispatch: React.Dispatch<{ type: AUTH_ACTIONS; payload?: any }>;
-  // 👇 AGREGAMOS LA FUNCIÓN DE INICIO DE SESIÓN MANUAL 👇
   loginWithTokens: (tokens: AuthTokens) => Promise<void>; 
 }
 

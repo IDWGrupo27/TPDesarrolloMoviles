@@ -14,15 +14,15 @@ export default function NewPassword() {
     const navigation = useNavigation();
     const route = useRoute();
     
-    // Email se precarga si se pasó desde ForgotPassword
+    // se precarga el Email
     const initialEmail = (route.params as RouteParams)?.email || '';
 
     const [email, setEmail] = useState(initialEmail);
-    const [token, setToken] = useState(""); // Campo para el código/token
+    const [token, setToken] = useState(""); 
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     
-    // El control de visibilidad ahora afecta a ambas contraseñas.
+    
     const [passwordVisible, setPasswordVisible] = useState(false); 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -44,7 +44,7 @@ export default function NewPassword() {
             const { error: verifyError } = await supabase.auth.verifyOtp({
                 email: email,
                 token: token, 
-                type: 'email', // Tipo: Usamos 'email' porque es lo que Supabase espera para el canal de email
+                type: 'email', // Tipo:'email' porque es lo que Supabase espera para el canal de email
             });
 
             if (verifyError) {
@@ -81,7 +81,7 @@ export default function NewPassword() {
                     <Text style={styles.mainTitle}>🔐 Acceso a tu Cuenta</Text>
                     <Text style={styles.instructionTitle}>Verificación y Nueva Contraseña</Text>
 
-                    {/* Instrucciones Modernas */}
+                    {/* Instrucciones */}
                     <View style={styles.instructionsContainer}>
                          <Text style={styles.instructionStep}>1. Revisa tu email (código de seguridad).</Text>
                          <Text style={styles.instructionStep}>2. Ingresa el código, tu email y tu nueva clave.</Text>

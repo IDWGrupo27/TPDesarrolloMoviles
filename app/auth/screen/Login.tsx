@@ -92,7 +92,7 @@ export default function Login() {
 
    const handleGoToForgotPassword = () => {
     //@ts-ignore
-    navigation.navigate("ForgotPassword"); // Usa el nombre que le diste en el Stack.Screen
+    navigation.navigate("ForgotPassword"); 
 };
 
     return (

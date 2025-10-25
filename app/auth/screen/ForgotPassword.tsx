@@ -20,7 +20,7 @@ export default function ForgotPassword() {
   const navigation = useNavigation();
   const [emailFocused, setEmailFocused] = useState(false);
 
-  // --- 2. La Lógica para llamar a Supabase ---
+  // --- 2. Lógica para llamar a Supabase ---
   const handlePasswordReset = async (values: { email: string }, { setSubmitting }: any) => {
     try {
       // Usamos signInWithOtp (Magic Link) para enviar el código de seguridad
