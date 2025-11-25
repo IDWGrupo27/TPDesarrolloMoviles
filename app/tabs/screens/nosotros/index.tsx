@@ -31,7 +31,7 @@ export default function Nosotros() {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
             <Header />
             <ScrollView>
                 <Animated.View style={[{

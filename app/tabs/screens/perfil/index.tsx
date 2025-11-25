@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import Header from "../../../../components/Header";
 import { Image } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Container = styled.View`
     flex: 1;
@@ -80,7 +81,7 @@ export default function Perfil() {
     const navigation = useNavigation();
 
     return (
-        <>
+        <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
             <Header />
             <Container>
                 <Frame>
@@ -110,6 +111,6 @@ export default function Perfil() {
                     </ProfileInfo>
                 </Frame>
             </Container>
-        </>
+        </SafeAreaView>
     );
 }
