@@ -7,7 +7,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../../utils/RootStackParamList';
 import { useLastNotificationResponse } from 'expo-notifications'
 
-
+interface DatosNotification {
+    edad?: string
+    genero?: string
+    tamaño?: string
+}
 
 async function requestNotificationPermissions() {
     try {
@@ -39,7 +43,7 @@ async function requestNotificationPermissions() {
 }
 
 
-export const sendNotification = async (d: Date, pet: Pet) => {
+export const sendNotification = async (d: Date, pet: Pet, datos: DatosNotification) => {
     try {
         const permissions = requestNotificationPermissions()
 
@@ -50,7 +54,7 @@ export const sendNotification = async (d: Date, pet: Pet) => {
         const identifier = await Notifications.scheduleNotificationAsync({
             content: {
                 title: 'Recordatorio de adopcion!',
-                body: `Generaste un recordatorio para una publicacion de aopcion que te intereso`,
+                body: `Generaste un recordatorio para una publicacion de adopcion que te intereso:\nNombre: ${pet.name}\nEdad: ${datos.edad}\nGénero: ${datos.genero}\nTamaño: ${datos.tamaño} `,
                 data: { pet }
             },
             trigger: {
@@ -78,30 +82,30 @@ Notifications.setNotificationHandler({
 });
 
 export default function NotificationListener() {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
-  const lastNotificationResponse = useLastNotificationResponse()
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+    const lastNotificationResponse = useLastNotificationResponse()
 
-  useEffect(() => {
-    if (lastNotificationResponse) {
-      const data = lastNotificationResponse.notification.request.content.data as { pet: Pet }
-      if (data?.pet) {
-        navigation.navigate('DetalleMascota', { pet: data.pet })
-      }
-    }
-  }, [lastNotificationResponse, navigation])
+    useEffect(() => {
+        if (lastNotificationResponse) {
+            const data = lastNotificationResponse.notification.request.content.data as { pet: Pet }
+            if (data?.pet) {
+                navigation.navigate('DetalleMascota', { pet: data.pet })
+            }
+        }
+    }, [lastNotificationResponse, navigation])
 
-  // Manejo de notificaciones mientras la app está abierta
-  useEffect(() => {
-    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
-      const data = response.notification.request.content.data as { pet: Pet }
-      if (data?.pet) {
-        navigation.navigate('DetalleMascota', { pet: data.pet })
-      }
-    })
-    return () => subscription.remove()
-  }, [navigation])
+    // Manejo de notificaciones mientras la app está abierta
+    useEffect(() => {
+        const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+            const data = response.notification.request.content.data as { pet: Pet }
+            if (data?.pet) {
+                navigation.navigate('DetalleMascota', { pet: data.pet })
+            }
+        })
+        return () => subscription.remove()
+    }, [navigation])
 
-  return null
+    return null
 }
 
 
@@ -136,4 +140,4 @@ export default function NotificationListener() {
     }, [navigation])
 
 }*/
- 
+

@@ -180,7 +180,7 @@ export default function DetalleMascota() {
                 style={[styles.contactButton, { alignSelf: 'center', marginTop: 15 }]}
                 onPress={async () => {
                   setModalNotification(false)
-                  await sendNotification(timeNotification, {id: pet.id, name: pet.name, photos: pet.photos})
+                  await sendNotification(timeNotification, {id: pet.id, name: pet.name, photos: pet.photos}, {edad: pet.age, genero: translateGender(pet.gender), tamaño: translateSize(pet.size)})
                 }}
               >
                 <Text style={styles.contactButtonText}>Recordarme</Text>
