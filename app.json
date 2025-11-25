@@ -41,7 +41,11 @@
     },
     "plugins": [
       "expo-secure-store",
-      "expo-font"
+      "expo-font",
+      ["expo-notifications", {
+        "icon": "",
+        "color": "#fffffff"
+      }]
     ],
     "extra": {
       "eas": {
