@@ -17,7 +17,7 @@ export default function Map({ organizations, onSelect }: MapProps) {
   if (validOrgs.length === 0) {
     return (
       <View style={styles.centered}>
-        <Text>No se encontraron refugios con ubicación.</Text> ;
+        <Text>No se encontraron refugios con ubicación.</Text>
       </View>
     );
   }
