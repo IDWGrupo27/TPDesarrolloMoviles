@@ -50,10 +50,13 @@
     "plugins": [
       "expo-secure-store",
       "expo-font",
-      ["expo-notifications", {
-        "icon": "",
-        "color": "#ffffff"
-      }], 
+      [
+        "expo-notifications",
+        {
+          "icon": "",
+          "color": "#ffffff"
+        }
+      ],
       [
         "expo-location",
         {
@@ -61,4 +64,6 @@
           "isIosBackgroundLocationEnabled": "Permitir ${PRODUCT_NAME} acceder a la geolocalización en background."
         }
       ]
-    ],
+    ]
+  }
+}
