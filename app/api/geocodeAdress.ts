@@ -1,4 +1,4 @@
-const GEOCODE_API_KEY = "AIzaSyAn2aOlDpEExpDirhSmpfr1aEadN8Sn4l8";
+const GEOCODE_API_KEY = "";
 
 export async function geocodeAddress(address: string) {
     try {
