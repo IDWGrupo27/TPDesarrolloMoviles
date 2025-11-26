@@ -24,6 +24,7 @@ import { AUTH_ACTIONS, AuthContext } from "../../../shares/context";
 import { supabase } from '../../api/supabaseClient';
 import * as SecureStore from 'expo-secure-store';
 import { useTranslation } from 'react-i18next';
+import React from "react";
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -39,61 +40,61 @@ export default function Login() {
     const [emailFocused, setEmailFocused] = useState(false);
     const [passwordFocused, setPasswordFocused] = useState(false);
     const { dispatch } = useContext(AuthContext);
-    const { t } = useTranslation('auth'); 
+    const { t } = useTranslation('auth');
 
-   const handleLogin = async (values: { email: string; pass: string }) => {
-      try {
-          const { data, error } = await supabase.auth.signInWithPassword({
-              email: values.email,
-              password: values.pass
-          });
+    const handleLogin = async (values: { email: string; pass: string }) => {
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: values.email,
+                password: values.pass
+            });
 
-          if (error || !data.user) {
-              let mensajeError = error?.message;
-              if (mensajeError === 'Invalid login credentials') {
-                  mensajeError = t('invalidCredentials');
-              }
-              return Alert.alert(t('loginErrorTitle'), mensajeError || 'No se pudo iniciar sesión');
-          }
-         
-          const user = data.user;
+            if (error || !data.user) {
+                let mensajeError = error?.message;
+                if (mensajeError === 'Invalid login credentials') {
+                    mensajeError = t('invalidCredentials');
+                }
+                return Alert.alert(t('loginErrorTitle'), mensajeError || 'No se pudo iniciar sesión');
+            }
 
-          const { data: profileData, error: profileError } = await supabase
-              .from('profiles')
-              .select('nombre, apellido') 
-              .eq('id', user.id)         
-              .single();                
-         
-          if (profileError) {
-              console.error("Error al buscar perfil:", profileError);
-              
-          }
-        
-          const userName = profileData?.nombre || user.email; 
-         
-          await SecureStore.setItemAsync('user', JSON.stringify(user)); 
-          dispatch({
-              type: AUTH_ACTIONS.LOGIN,
-              payload: { user: user } 
-          });
+            const user = data.user;
 
-          Alert.alert('¡Bienvenido!', `Hola ${userName}`);
+            const { data: profileData, error: profileError } = await supabase
+                .from('profiles')
+                .select('nombre, apellido')
+                .eq('id', user.id)
+                .single();
 
-      } catch (e: any) { 
-          console.log("Error inesperado en handleLogin:", e);
-          Alert.alert('Error', 'Algo salió mal. Intenta nuevamente.');
-      }
-  }; 
+            if (profileError) {
+                console.error("Error al buscar perfil:", profileError);
+
+            }
+
+            const userName = profileData?.nombre || user.email;
+
+            await SecureStore.setItemAsync('user', JSON.stringify(user));
+            dispatch({
+                type: AUTH_ACTIONS.LOGIN,
+                payload: { user: user }
+            });
+
+            Alert.alert('¡Bienvenido!', `Hola ${userName}`);
+
+        } catch (e: any) {
+            console.log("Error inesperado en handleLogin:", e);
+            Alert.alert('Error', 'Algo salió mal. Intenta nuevamente.');
+        }
+    };
 
     const handleGoToRegister = () => {
         //@ts-ignore
         navigation.navigate(AUTH_ROUTES.REGISTER, { name: 'register' });
     };
 
-   const handleGoToForgotPassword = () => {
-    //@ts-ignore
-    navigation.navigate("ForgotPassword"); 
-};
+    const handleGoToForgotPassword = () => {
+        //@ts-ignore
+        navigation.navigate("ForgotPassword");
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -175,7 +176,7 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: materialColors.schemes.light.background },
+    container: { flex: 1, backgroundColor: materialColors.schemes.light.background, paddingHorizontal: 10 },
     keyboardView: { flex: 1 },
     scrollContainer: { flexGrow: 1 },
     formContainer: { flex: 1, paddingHorizontal: 24, paddingTop: 30, paddingBottom: 20 },

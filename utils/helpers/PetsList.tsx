@@ -34,7 +34,7 @@ export default function PetsList({ type }: { type: string }) {
         setPets([]);
         setPage(1);
         setHasMore(true);
-        loadPets(1); 
+        loadPets(1);
     }, [type]);
 
     // Scroll infinito
@@ -42,7 +42,7 @@ export default function PetsList({ type }: { type: string }) {
         if (!loading.current && hasMore) {
             const nextPage = page + 1;
             setPage(nextPage);
-            loadPets(nextPage); 
+            loadPets(nextPage);
         }
     };
 
@@ -52,7 +52,7 @@ export default function PetsList({ type }: { type: string }) {
             keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => <PetCard pet={item} />}
             onEndReached={handleEndReached}
-            onEndReachedThreshold={0.2} 
+            onEndReachedThreshold={0.2}
         />
     );
 }

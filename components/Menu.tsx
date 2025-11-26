@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ItemMenu from "./ItemMenu";
+import { useNavigation } from "@react-navigation/native";
 
 
 interface ShowMenu {
@@ -25,6 +26,35 @@ const itemList: ItemProps[] = [
 export default function Menu(prop: ShowMenu): any {
 
     const { press, onPress, style } = prop
+    const navigation = useNavigation()
+
+    const handleSelectItem = (itemName: string) => {
+        onPress();
+        // Navegar a la pantalla correspondiente
+        // 👉 navegar según la opción
+        switch (itemName) {
+            case "Inicio":
+                navigation.navigate("TABS" as never);
+                break;
+
+            case "Mi cuenta":
+                navigation.navigate("MiCuenta" as never);
+                break;
+
+            case "Refugios":
+                navigation.navigate("Refugios" as never);
+                break;
+
+            case "Ayuda":
+                navigation.navigate("Ayuda" as never);
+                break;
+
+            case "Configuracion":
+                navigation.navigate("Configuracion" as never);
+                break;
+        }
+    }
+
 
     return (
         <View style={style}>
@@ -33,13 +63,15 @@ export default function Menu(prop: ShowMenu): any {
                 {
                     press && (
                         <View>
-                            {
-                                itemList.map((item: ItemProps, index) =>
-                                    <TouchableOpacity key={index} style={styles.item} >
-                                        <ItemMenu name={item.name} logo={item.logo}/>
-                                    </TouchableOpacity>
-                                )
-                            }
+                            {itemList.map((item: ItemProps, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={styles.item}
+                                    onPress={() => handleSelectItem(item.name)} // 👈 ahora navega
+                                >
+                                    <ItemMenu name={item.name} logo={item.logo} />
+                                </TouchableOpacity>
+                            ))}
                         </View>
                     )
                 }
@@ -50,7 +82,7 @@ export default function Menu(prop: ShowMenu): any {
 }
 
 const styles = StyleSheet.create({
-    
+
     item: {
         height: 40,
         width: '100%',
