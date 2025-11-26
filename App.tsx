@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import AuthContext from './shares/context/auth-context';
 import { AuthTokens } from './shares/models/users';
 import { Buffer } from 'buffer';
+import NotificationListener from './app/tabs/screens/detalleMascota/notifications';
 
 // Aplicamos el shim de Buffer
 global.Buffer = global.Buffer || Buffer;
@@ -36,6 +37,7 @@ export default function App() {
                 <StatusBar style="auto" />
                 <AuthProvider>
                     <Root />
+                <NotificationListener />
                 </AuthProvider>
             </NavigationContainer>
         );

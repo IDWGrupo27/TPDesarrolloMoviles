@@ -50,6 +50,10 @@
     "plugins": [
       "expo-secure-store",
       "expo-font",
+      ["expo-notifications", {
+        "icon": "",
+        "color": "#ffffff"
+      }], 
       [
         "expo-location",
         {
@@ -58,10 +62,3 @@
         }
       ]
     ],
-    "extra": {
-      "eas": {
-        "projectId": "3ca61c5e-91ee-48b0-9ba3-67aac17b9bcd"
-      }
-    }
-  }
-}

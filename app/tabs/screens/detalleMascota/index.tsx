@@ -7,6 +7,8 @@ import {
   FlatList,
   TouchableOpacity,
   Modal,
+  Platform,
+  Pressable,
 } from 'react-native';
 import Header from '../../../../components/Header';
 import { useRoute } from '@react-navigation/native';
@@ -14,6 +16,8 @@ import { Pet } from '../../../../utils/helpers/petfinderHelpers';
 import { translateGender, translateSize } from '../../../../utils/helpers/translatePet';
 import AspectRatioImage from '../../../../components/AspectRatioImage';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
+import { sendNotification } from './notifications';
 
 type RouteParams = {
   pet: Pet;
@@ -24,10 +28,46 @@ export default function DetalleMascota() {
   const { pet } = route.params as RouteParams;
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [modalNotification, setModalNotification] = useState(false);
+  const [timeNotification, setTimeNotification] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
+
+
   // Limpiar descripción
   const description = pet.description
     ? pet.description.replace(/\n/g, ' ').trim()
     : 'No hay descripción disponible';
+
+  const onChangeDate = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    if (event.type === "set" && selectedDate) {
+      setDate(selectedDate);
+      setShowDatePicker(false);
+      setShowTimePicker(true);
+    } else {
+      setShowDatePicker(false);
+    }
+  };
+
+  const onChangeTime = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    if (event.type === "set" && selectedDate) {
+      setTime(selectedDate);
+      setShowTimePicker(false);
+      const finalDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        selectedDate.getHours(),
+        selectedDate.getMinutes()
+      );
+      setTimeNotification(finalDate);
+      setModalNotification(true);
+    } else {
+      setShowTimePicker(false);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
@@ -82,7 +122,14 @@ export default function DetalleMascota() {
           <Text style={styles.contactButtonText}>Contacto</Text>
         </TouchableOpacity>
 
-        {/* Modal */}
+        {/* Botón de notificacion */}
+        <TouchableOpacity style={styles.contactButton} onPress={() => {
+          setShowDatePicker(true)
+        }}>
+          <Text style={styles.contactButtonText}>Recordarme esta publicacion</Text>
+        </TouchableOpacity>
+
+        {/* Modal Contacto */}
         <Modal visible={modalVisible} transparent animationType="slide">
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
@@ -104,7 +151,52 @@ export default function DetalleMascota() {
             </View>
           </View>
         </Modal>
-      </ScrollView>
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            locale='es-AR'
+            onChange={onChangeDate}
+          />
+        )}
+
+        {showTimePicker && (
+          <DateTimePicker
+            value={time}
+            mode="time"
+            display="default"
+            locale='es-AR'
+            onChange={onChangeTime}
+          />
+        )}
+
+        {/* Modal Notificacion */}
+        <Modal visible={modalNotification} transparent animationType="slide">
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity
+                style={[styles.contactButton, { alignSelf: 'center', marginTop: 15 }]}
+                onPress={async () => {
+                  setModalNotification(false)
+                  await sendNotification(timeNotification, {id: pet.id, name: pet.name, photos: pet.photos}, {edad: pet.age, genero: translateGender(pet.gender), tamaño: translateSize(pet.size)})
+                }}
+              >
+                <Text style={styles.contactButtonText}>Recordarme</Text>
+              </TouchableOpacity>
+              <Text style={[styles.modalTitle, { alignSelf: 'center' }]} > {timeNotification.toLocaleString()} </Text>
+              <TouchableOpacity
+                onPress={() => setModalNotification(false)}
+                style={{ alignSelf: 'center', marginTop: 20, backgroundColor: '#eeeeee', borderRadius: 20 }}>
+
+                <Text style={{ fontSize: 20,  padding: 10 }}>Cancelar</Text>
+
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </ScrollView >
 
     </SafeAreaView>
   );
