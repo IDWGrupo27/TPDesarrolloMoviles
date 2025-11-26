@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native"
 import Ionicons from '@expo/vector-icons/Ionicons';
+import React from "react";
 
 
 interface ItemProps {
@@ -18,12 +19,12 @@ export default function ItemMenu(item: ItemProps) {
 }
 
 const style = StyleSheet.create({
-    
+
     boxItem: {
         flexDirection: 'row',
         alignItems: 'center'
     },
-    
+
     item: {
         color: '#ffffff',
         fontSize: 15,

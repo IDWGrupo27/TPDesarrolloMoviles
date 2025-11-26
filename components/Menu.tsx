@@ -1,7 +1,6 @@
 import { FlatList, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ItemMenu from "./ItemMenu";
-import { useContext } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { TAB_ROUTES } from "../utils/constants";
 
@@ -31,51 +30,69 @@ const itemList: ItemProps[] = [
 export default function Menu(prop: ShowMenu): any {
 
     const route = useRoute()
-
     const { press, onPress, style } = prop
+    const navigation = useNavigation()
+
+    const handleSelectItem = (itemName: string) => {
+        onPress();
+        // Navegar a la pantalla correspondiente
+        switch (itemName) {
+            case "Inicio":
+                navigation.navigate("TABS" as never);
+                break;
+
+            case "Mi cuenta":
+                navigation.navigate("MiCuenta" as never);
+                break;
+
+            case "Refugios":
+                navigation.navigate("Refugios" as never);
+                break;
+
+            case "Ayuda":
+                navigation.navigate("Ayuda" as never);
+                break;
+
+            case "Configuracion":
+                navigation.navigate("Configuracion" as never);
+                break;
+        }
+    }
+
 
     if (route.name === 'Login' || route.name === 'Registrer' || route.name === 'ForgotPassword' || route.name === 'NewPassword'  ) {
         return null
     }
 
-    const navigation = useNavigation()
-
     return (
-
-
         <View style={style}>
             <TouchableOpacity style={{ position: "absolute", left: 10, top: 10 }} onPress={onPress}>
                 <Ionicons name="menu" size={30} color="black" />
                 {
                     press && (
                         <View>
-                            {
-                                itemList.map((item: ItemProps, index) =>
-                                    <TouchableOpacity key={index} style={styles.item}>
-                                        <ItemMenu name={item.name} logo={item.logo} />
-                                    </TouchableOpacity>
-                                )
-                            }
+                            {itemList.map((item: ItemProps, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={styles.item}
+                                    onPress={() => handleSelectItem(item.name)} 
+                                >
+                                    <ItemMenu name={item.name} logo={item.logo} />
+                                </TouchableOpacity>
+                            ))}
                         </View>
                     )
                 }
             </TouchableOpacity>
         </View>
-
-     
     )
-
-
-
 }
 
 const styles = StyleSheet.create({
-
     item: {
         height: 40,
         width: '100%',
         marginTop: 25,
         paddingLeft: 10
-
     }
 })

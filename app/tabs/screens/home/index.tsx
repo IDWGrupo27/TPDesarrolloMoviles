@@ -6,6 +6,7 @@ import FilterBar from '../../../../components/FilterBar';
 import { fetchPets } from '../../../../utils/helpers/petfinderHelpers';
 import PetsList from '../../../../utils/helpers/PetsList';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
 
 const animalTypes = [
     { key: 'dog', label: 'Perros' },
@@ -14,11 +15,11 @@ const animalTypes = [
 ];
 
 export default function HomeScreen() {
-    
+
     const [selectedType, setSelectedType] = useState<string>("dog");
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
             <Header />
             <View style={styles.container}>
                 <FilterBar

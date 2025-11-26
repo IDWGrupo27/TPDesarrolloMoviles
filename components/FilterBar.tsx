@@ -1,6 +1,7 @@
 // components/FilterBar.tsx
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { materialColors } from "../utils/colors";
+import React from "react";
 
 interface FilterBarProps {
     animalTypes: { key: string, label: string }[];
@@ -35,14 +36,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        gap: 10, 
+        gap: 10,
         marginVertical: 15,
     },
-  filterButton: {
+    filterButton: {
         paddingVertical: 8,
         paddingHorizontal: 18,
         borderRadius: 25,
-        backgroundColor: materialColors.schemes.dark.secondary, 
+        backgroundColor: materialColors.schemes.dark.secondary,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.15,
@@ -50,16 +51,16 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     filterButtonActive: {
-        backgroundColor: '#5e2b83ff', 
+        backgroundColor: '#5e2b83ff',
         shadowOpacity: 0.3,
         transform: [{ scale: 1.05 }],
     },
     filterText: {
         fontSize: 16,
-        color: '#E0E0E0', 
+        color: '#E0E0E0',
     },
     filterTextActive: {
-        color: '#FFF', 
+        color: '#FFF',
         fontWeight: 'bold',
     },
 });

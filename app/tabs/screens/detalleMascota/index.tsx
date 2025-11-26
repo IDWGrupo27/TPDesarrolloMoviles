@@ -70,7 +70,7 @@ export default function DetalleMascota() {
   };
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
       <Header />
 
       <ScrollView contentContainerStyle={styles.container}>
@@ -198,7 +198,7 @@ export default function DetalleMascota() {
         </Modal>
       </ScrollView >
 
-    </>
+    </SafeAreaView>
   );
 }
 
