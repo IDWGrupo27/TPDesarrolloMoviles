@@ -5,12 +5,14 @@ import { initReactI18next } from 'react-i18next';
 
 // ACÁ VAN LOS ARchivos que vamos creando  de .json
 import authEs from '../translations/es/auth.json';
+import petDetailEs from '../translations/es/petDetail.json';
 
 
 // Objeto con todas las traducciones
 const resources = {
   es: {
     auth: authEs,     // Namespace "auth"
+    petDetail: petDetailEs, // Namespace "petDetail"
   },
   // acá se pueden agregar más idiomas a futuro, por ejemplo 'en': { ... }
 };
@@ -30,7 +32,7 @@ i18n
     fallbackLng: 'es',
 
     // Namespaces (los "módulos" que definimos)
-    ns: ['common', 'auth'],
+    ns: ['common', 'auth', 'petDetail'],
     // Namespace que carga por defecto si no especificas uno
     defaultNS: 'common',
 

@@ -14,7 +14,7 @@ import {
 import Header from '../../../../components/Header';
 import { useRoute } from '@react-navigation/native';
 import { Pet } from '../../../../utils/helpers/petfinderHelpers';
-import { translateGender, translateSize } from '../../../../utils/helpers/translatePet';
+import { translateGender, translateSize, translateAge } from '../../../../utils/helpers/translatePet';
 import AspectRatioImage from '../../../../components/AspectRatioImage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
@@ -22,6 +22,7 @@ import { sendNotification } from './notifications';
 import { materialColors } from '../../../../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { isFavorite, toggleFavorite } from '../../../../utils/helpers/favoritesHelper';
+import { useTranslation } from 'react-i18next';
 
 type RouteParams = {
   pet: Pet;
@@ -32,6 +33,7 @@ export default function DetalleMascota() {
   const { pet } = route.params as RouteParams;
   const [modalVisible, setModalVisible] = useState(false);
   const [isFav, setIsFav] = useState(false);
+  const { t } = useTranslation();
 
   const [modalNotification, setModalNotification] = useState(false);
   const [timeNotification, setTimeNotification] = useState(new Date());
@@ -58,17 +60,17 @@ export default function DetalleMascota() {
   // Limpiar descripción
   const description = pet.description
     ? pet.description.replace(/\n/g, ' ').trim()
-    : 'No hay descripción disponible';
+    : t('petDetail:labels.noDescription');
 
   // Chips de atributos/entorno
   const chips: Array<{ icon: any; label: string; tone?: 'success' | 'info' | 'secondary' | 'danger' | 'tertiary' }> = [];
-  if (pet.attributes?.spayed_neutered) chips.push({ icon: 'checkmark-circle-outline', label: 'Castrado/a', tone: 'success' });
-  if (pet.attributes?.house_trained) chips.push({ icon: 'home-outline', label: 'Entrenado/a', tone: 'tertiary' });
-  if (pet.attributes?.shots_current) chips.push({ icon: 'shield-checkmark-outline', label: 'Vacunas al día', tone: 'info' });
-  if (pet.attributes?.special_needs) chips.push({ icon: 'alert-circle-outline', label: 'Necesidades especiales', tone: 'danger' });
-  if (pet.environment?.children) chips.push({ icon: 'people-outline', label: 'Con niños', tone: 'secondary' });
-  if (pet.environment?.dogs) chips.push({ icon: 'paw-outline', label: 'Con perros', tone: 'secondary' });
-  if (pet.environment?.cats) chips.push({ icon: 'paw-outline', label: 'Con gatos', tone: 'secondary' });
+  if (pet.attributes?.spayed_neutered) chips.push({ icon: 'checkmark-circle-outline', label: t('petDetail:attributes.spayed_neutered'), tone: 'success' });
+  if (pet.attributes?.house_trained) chips.push({ icon: 'home-outline', label: t('petDetail:attributes.house_trained'), tone: 'tertiary' });
+  if (pet.attributes?.shots_current) chips.push({ icon: 'shield-checkmark-outline', label: t('petDetail:attributes.shots_current'), tone: 'info' });
+  if (pet.attributes?.special_needs) chips.push({ icon: 'alert-circle-outline', label: t('petDetail:attributes.special_needs'), tone: 'danger' });
+  if (pet.environment?.children) chips.push({ icon: 'people-outline', label: t('petDetail:environment.children'), tone: 'secondary' });
+  if (pet.environment?.dogs) chips.push({ icon: 'paw-outline', label: t('petDetail:environment.dogs'), tone: 'secondary' });
+  if (pet.environment?.cats) chips.push({ icon: 'paw-outline', label: t('petDetail:environment.cats'), tone: 'secondary' });
 
   const onChangeDate = (event: DateTimePickerEvent, selectedDate?: Date) => {
     if (event.type === "set" && selectedDate) {
@@ -123,24 +125,24 @@ export default function DetalleMascota() {
           <View style={styles.metaRow}>
             <View style={styles.metaChip}>
               <Ionicons name="pricetag-outline" size={16} color={materialColors.schemes.light.onSurfaceVariant} />
-              <Text style={styles.metaText}>{pet.breeds?.primary || 'Desconocida'} {pet.breeds?.mixed ? '(Mestizo)' : ''}</Text>
+              <Text style={styles.metaText}>{pet.breeds?.primary || t('petDetail:labels.unknown')} {pet.breeds?.mixed ? `(${t('petDetail:labels.mixed')})` : ''}</Text>
             </View>
             <View style={styles.metaChip}>
               <Ionicons name="time-outline" size={16} color={materialColors.schemes.light.onSurfaceVariant} />
-              <Text style={styles.metaText}>{pet.age || 'Edad desconocida'}</Text>
+              <Text style={styles.metaText}>{pet.age ? translateAge(pet.age) : t('petDetail:age.unknown')}</Text>
             </View>
           </View>
           <View style={styles.metaRow}>
             {pet.gender && (
               <View style={styles.metaChip}>
                 <Ionicons name="male-female-outline" size={16} color={materialColors.schemes.light.onSurfaceVariant} />
-                <Text style={styles.metaText}>Sexo: {translateGender(pet.gender)}</Text>
+                <Text style={styles.metaText}>{t('petDetail:labels.gender')}: {translateGender(pet.gender)}</Text>
               </View>
             )}
             {pet.size && (
               <View style={styles.metaChip}>
                 <Ionicons name="expand-outline" size={16} color={materialColors.schemes.light.onSurfaceVariant} />
-                <Text style={styles.metaText}>Tamaño: {translateSize(pet.size)}</Text>
+                <Text style={styles.metaText}>{t('petDetail:labels.size')}: {translateSize(pet.size)}</Text>
               </View>
             )}
           </View>
@@ -149,7 +151,7 @@ export default function DetalleMascota() {
         {/* Chips en tarjeta */}
         {chips.length > 0 && (
           <View style={styles.card}>
-            <Text style={styles.sectionTitle}>Características</Text>
+            <Text style={styles.sectionTitle}>{t('petDetail:labels.characteristics')}</Text>
             <View style={styles.chipsRow}>
               {chips.map((c, idx) => {
                 const scheme = materialColors.schemes.light;
@@ -173,18 +175,18 @@ export default function DetalleMascota() {
 
         {/* Descripción en tarjeta */}
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Descripción</Text>
+          <Text style={styles.sectionTitle}>{t('petDetail:labels.description')}</Text>
           <Text style={styles.descripcion}>{description}</Text>
         </View>
 
         {/* Acciones */}
         <View style={styles.actionsRow}>
           <TouchableOpacity style={[styles.outlineButton, { flex: 1 }]} onPress={() => setShowDatePicker(true)}>
-            <Text style={styles.outlineButtonText}>Recordarme</Text>
+            <Text style={styles.outlineButtonText}>{t('petDetail:labels.remindMe')}</Text>
           </TouchableOpacity>
           <View style={{ width: 12 }} />
           <TouchableOpacity style={[styles.primaryButton, { flex: 1 }]} onPress={() => setModalVisible(true)}>
-            <Text style={styles.primaryButtonText}>Contactar</Text>
+            <Text style={styles.primaryButtonText}>{t('petDetail:labels.contact')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -193,7 +195,7 @@ export default function DetalleMascota() {
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
               <View style={styles.modalHeader}>
-                <Text style={styles.modalTitle}>Contacto del Refugio</Text>
+                <Text style={styles.modalTitle}>{t('petDetail:labels.contactShelter')}</Text>
                 <TouchableOpacity style={styles.modalClose} onPress={() => setModalVisible(false)}>
                   <Ionicons name="close" size={22} color={materialColors.schemes.light.onSurface} />
                 </TouchableOpacity>
