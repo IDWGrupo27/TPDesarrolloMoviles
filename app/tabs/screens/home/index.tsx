@@ -19,7 +19,7 @@ export default function HomeScreen() {
     const [selectedType, setSelectedType] = useState<string>("dog");
 
     return (
-        <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
+        <SafeAreaView style={{ flex: 1 }}>
             <Header />
             <View style={styles.container}>
                 <FilterBar
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingHorizontal: 20,
-        paddingTop: 20,
+        paddingHorizontal: 12,
+        paddingTop: 8,
     },
     title: {
         fontSize: 22,
