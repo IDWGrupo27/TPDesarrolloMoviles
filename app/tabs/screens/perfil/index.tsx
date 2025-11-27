@@ -113,6 +113,25 @@ export default function Perfil() {
     }
   };
 
+  const updateProfile = async () => {
+    if (!profile) return;
+    const updatedProfile = {
+        descripcion: newDescripcion || profile.descripcion,
+        telefono: newTelefono || profile.telefono,
+        direccion: newDireccion || profile.direccion,
+    };
+    const { error } = await supabase
+      .from("profiles")
+      .update(updatedProfile)
+      .eq("id", profile.id);
+    if (error) {
+      console.error("Error updating profile:", error);
+    } else {
+      setProfile({ ...profile, ...updatedProfile });
+      setEditing(false);
+    }
+  };
+
   useEffect(() => {
     fetchProfile();
   }, []);
