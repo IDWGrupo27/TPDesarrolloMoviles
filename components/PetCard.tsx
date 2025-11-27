@@ -1,9 +1,12 @@
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/RootStackParamList';
 import AspectRatioImage from './AspectRatioImage'; 
 import { Pet} from "../utils/helpers/petfinderHelpers";
+import { Ionicons } from '@expo/vector-icons';
+import { useState, useEffect, useCallback } from 'react';
+import { isFavorite, toggleFavorite } from '../utils/helpers/favoritesHelper';
 
 interface PetCardProps {
     pet:Pet;
@@ -12,6 +15,24 @@ interface PetCardProps {
 export default function PetCard({ pet }: PetCardProps) {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const cardWidth = Dimensions.get('window').width - 40;
+    const [isFav, setIsFav] = useState(false);
+
+    useFocusEffect(
+        useCallback(() => {
+            checkFavorite();
+        }, [pet.id])
+    );
+
+    const checkFavorite = async () => {
+        const fav = await isFavorite(pet.id);
+        setIsFav(fav);
+    };
+
+    const handleToggleFavorite = async (e: any) => {
+        e.stopPropagation();
+        const newState = await toggleFavorite(pet);
+        setIsFav(newState);
+    };
 
     return (
         <TouchableOpacity 
@@ -22,6 +43,17 @@ export default function PetCard({ pet }: PetCardProps) {
             {pet.photos && pet.photos[0] && (
                 <AspectRatioImage uri={pet.photos[0].medium} style={styles.imageWrapper} />
             )}
+
+            <TouchableOpacity 
+                onPress={handleToggleFavorite}
+                style={styles.favoriteButton}
+            >
+                <Ionicons 
+                    name={isFav ? 'heart' : 'heart-outline'} 
+                    size={28} 
+                    color={isFav ? '#FF4458' : '#fff'} 
+                />
+            </TouchableOpacity>
 
             <View style={styles.petNameContainer}>
                 <Text style={styles.petName}>{pet.name}</Text>
@@ -59,5 +91,14 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    favoriteButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        borderRadius: 20,
+        padding: 6,
+        zIndex: 10,
     },
 });

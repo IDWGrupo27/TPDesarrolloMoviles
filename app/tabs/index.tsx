@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AUTH_ACTIONS, AuthContext } from "../../shares/context";
 import { TouchableOpacity } from "react-native";
 import Perfil from "./screens/perfil";
+import FavoritosScreen from "./screens/favoritos";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Tab = createBottomTabNavigator();
@@ -28,6 +29,8 @@ export default function TabsScreen() {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === TAB_ROUTES.MY_NETWORK) {
                         iconName = focused ? 'people' : 'people-outline';
+                    } else if (route.name === TAB_ROUTES.FAVORITOS) {
+                        iconName = focused ? 'heart' : 'heart-outline';
                     } else if (route.name === TAB_ROUTES.PERFIL) {
                         iconName = focused ? 'person' : 'person-outline';
                     }
@@ -47,6 +50,11 @@ export default function TabsScreen() {
             <Tab.Screen name={TAB_ROUTES.MY_NETWORK} component={Nosotros}
                 options={{
                     title: "Nosotros",
+                }}
+            />
+            <Tab.Screen name={TAB_ROUTES.FAVORITOS} component={FavoritosScreen}
+                options={{
+                    title: "Favoritos",
                 }}
             />
             <Tab.Screen name={TAB_ROUTES.PERFIL} component={Perfil}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { sendNotification } from './notifications';
 import { materialColors } from '../../../../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
+import { isFavorite, toggleFavorite } from '../../../../utils/helpers/favoritesHelper';
 
 type RouteParams = {
   pet: Pet;
@@ -30,6 +31,7 @@ export default function DetalleMascota() {
   const route = useRoute();
   const { pet } = route.params as RouteParams;
   const [modalVisible, setModalVisible] = useState(false);
+  const [isFav, setIsFav] = useState(false);
 
   const [modalNotification, setModalNotification] = useState(false);
   const [timeNotification, setTimeNotification] = useState(new Date());
@@ -37,6 +39,20 @@ export default function DetalleMascota() {
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    checkFavorite();
+  }, [pet.id]);
+
+  const checkFavorite = async () => {
+    const fav = await isFavorite(pet.id);
+    setIsFav(fav);
+  };
+
+  const handleToggleFavorite = async () => {
+    const newState = await toggleFavorite(pet);
+    setIsFav(newState);
+  };
 
 
   // Limpiar descripción
@@ -523,5 +539,19 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     lineHeight: 20,
     marginLeft: 8,
+  },
+  favoriteFloating: {
+    position: 'absolute',
+    top: 220,
+    right: 20,
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    padding: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 5,
+    zIndex: 10,
   },
 });
