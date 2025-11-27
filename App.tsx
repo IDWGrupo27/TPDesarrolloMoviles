@@ -25,25 +25,9 @@ const parseSupabaseUrl = (url: string) => {
     return parsedUrl;
 };
 
-
-export default function App() {
-    // Obtenemos el contexto (usando el tipo para evitar el error 'is not a function')
-    const context = useContext(AuthContext);
-
-    if (!context || typeof context.loginWithTokens !== 'function') {
-        // Retornar solo el contenido básico si el contexto aún no está listo
-        return (
-            <NavigationContainer ref={navigationRef}>
-                <StatusBar style="auto" />
-                <AuthProvider>
-                    <Root />
-                <NotificationListener />
-                </AuthProvider>
-            </NavigationContainer>
-        );
-    }
-
-    const { loginWithTokens } = context;
+// Componente interno que usa el contexto DENTRO del Provider
+function AppContent() {
+    const { loginWithTokens } = useContext(AuthContext);
 
     // --- 2: OBTENER LINK INICIAL ---
     const getInitialURL = async () => {
@@ -87,14 +71,19 @@ export default function App() {
         subscribe: subscribe,
     };
 
-
     return (
         <NavigationContainer ref={navigationRef} linking={linking}>
             <StatusBar style="auto" />
-            <AuthProvider>
-                <Root />
-            </AuthProvider>
+            <Root />
+            <NotificationListener />
         </NavigationContainer>
     );
 }
 
+export default function App() {
+    return (
+        <AuthProvider>
+            <AppContent />
+        </AuthProvider>
+    );
+}
