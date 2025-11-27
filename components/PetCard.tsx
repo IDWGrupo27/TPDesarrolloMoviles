@@ -9,10 +9,11 @@ import { useState, useEffect, useCallback } from 'react';
 import { isFavorite, toggleFavorite } from '../utils/helpers/favoritesHelper';
 
 interface PetCardProps {
-    pet:Pet;
+    pet: Pet;
+    fullWidth?: boolean;
 }
 
-export default function PetCard({ pet }: PetCardProps) {
+export default function PetCard({ pet, fullWidth }: PetCardProps) {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const cardWidth = Dimensions.get('window').width - 40;
     const [isFav, setIsFav] = useState(false);
@@ -37,7 +38,10 @@ export default function PetCard({ pet }: PetCardProps) {
     return (
         <TouchableOpacity 
             onPress={() => navigation.navigate("DetalleMascota", { pet })}
-            style={[styles.petCard, { width: cardWidth }]}
+            style={[
+                styles.petCard,
+                fullWidth ? { width: '100%', alignSelf: 'stretch' } : { width: cardWidth }
+            ]}
         >
            
             {pet.photos && pet.photos[0] && (
@@ -73,7 +77,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         elevation: 5,
-        alignSelf: 'center',
         flexDirection: 'column',
     },
     imageWrapper: {

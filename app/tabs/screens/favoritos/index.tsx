@@ -32,7 +32,7 @@ export default function FavoritosScreen() {
 
     if (loading) {
         return (
-            <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <Header />
                 <View style={styles.emptyContainer}>
                     <Text style={styles.emptyText}>Cargando favoritos...</Text>
@@ -43,7 +43,7 @@ export default function FavoritosScreen() {
 
     if (favorites.length === 0) {
         return (
-            <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <Header />
                 <View style={styles.emptyContainer}>
                     <Text style={styles.emptyIcon}>💙</Text>
@@ -57,15 +57,16 @@ export default function FavoritosScreen() {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
+        <SafeAreaView style={{ flex: 1 }}>
             <Header />
             <View style={styles.container}>
                 <Text style={styles.title}>Mis Favoritos</Text>
                 <FlatList
                     data={favorites}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <PetCard pet={item} />}
+                    renderItem={({ item }) => <PetCard pet={item} fullWidth />}
                     contentContainerStyle={{ paddingBottom: 20 }}
+                    style={{ paddingHorizontal: 0 }}
                 />
             </View>
         </SafeAreaView>
@@ -76,8 +77,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingHorizontal: 20,
-        paddingTop: 20,
+        paddingHorizontal: 0,
+        paddingTop: 12,
     },
     title: {
         fontSize: 22,
