@@ -70,7 +70,7 @@ export default function DetalleMascota() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header />
 
       <ScrollView contentContainerStyle={styles.container}>
@@ -84,7 +84,7 @@ export default function DetalleMascota() {
             renderItem={({ item }) => (
               <AspectRatioImage uri={item.medium} style={styles.imageWrapper} />
             )}
-            contentContainerStyle={{ paddingHorizontal: 10 }}
+            contentContainerStyle={{ paddingHorizontal: 8 }}
           />
         )}
 
@@ -205,7 +205,7 @@ export default function DetalleMascota() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 20,
+    padding: 12,
     backgroundColor: '#fff',
     alignItems: 'center',
   },
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: 8,
     gap: 10,
   },
   attribute: {
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   },
   descripcion: {
     fontSize: 16,
-    marginVertical: 20,
+    marginVertical: 12,
     textAlign: 'center',
   },
   contactButton: {
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 40,
     borderRadius: 25,
-    marginBottom: 30,
+    marginBottom: 16,
   },
   contactButtonText: {
     color: '#fff',
