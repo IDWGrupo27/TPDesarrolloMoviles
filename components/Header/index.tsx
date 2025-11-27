@@ -8,6 +8,7 @@ import Logout from "../Logout";
 import { useRoute } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Menu from "../Menu";
+import React from "react";
 
 interface LogoutProps {
     logout: () => void;
@@ -21,20 +22,24 @@ const screenHeight = Dimensions.get('window').height;
 export default function Header() {
 
     const [isPressed, setIsPressed] = useState<boolean>(false)
-    
-        const handleMenu = () => {
-            if (!isPressed) {
-                setIsPressed(true)
-            } else {
-                setIsPressed(false)
-            }
+
+    const handleMenu = () => {
+        if (!isPressed) {
+            setIsPressed(true)
+        } else {
+            setIsPressed(false)
         }
+    }
 
     const { state, dispatch } = useContext(AuthContext);
 
     const handleLogout = () => {
         dispatch({ type: AUTH_ACTIONS.LOGOUT })
     }
+
+    const route = useRoute();
+
+    const hideLogout = route.name === 'Login' || route.name === 'Register' || route.name === 'ForgotPassword' || route.name === 'NewPassword';
 
     return (
         <LinearGradient
@@ -53,7 +58,8 @@ export default function Header() {
 
             <Text style={styles.appSubtitle}>Encuentra tu compañero ideal</Text>
 
-            <Logout logout={handleLogout} />
+            {/* <Logout logout={handleLogout} /> */}
+            {!hideLogout && <Logout logout={handleLogout} />}
 
         </LinearGradient>
 
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 5,
     },
-    
+
     showMenu: {
         width: screenWidth / 2,
         height: screenHeight,

@@ -1,6 +1,8 @@
 import { FlatList, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ItemMenu from "./ItemMenu";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { TAB_ROUTES } from "../utils/constants";
 
 
 interface ShowMenu {
@@ -12,19 +14,55 @@ interface ShowMenu {
 interface ItemProps {
     name: string
     logo: string
+    route?: string | undefined
 }
 
 const itemList: ItemProps[] = [
-    { name: 'Inicio', logo: 'home-outline', },
-    { name: 'Mi cuenta', logo: 'person', },
+    { name: 'Inicio', logo: 'home-outline', route: `${TAB_ROUTES.HOME}` },
+    { name: 'Mi cuenta', logo: 'person', route: `${TAB_ROUTES.PERFIL}`},
     { name: 'Refugios', logo: 'location-sharp', },
     { name: 'Ayuda', logo: 'help-circle', },
     { name: 'Configuracion', logo: 'cog', },
 ]
 
+
+
 export default function Menu(prop: ShowMenu): any {
 
+    const route = useRoute()
     const { press, onPress, style } = prop
+    const navigation = useNavigation()
+
+    const handleSelectItem = (itemName: string) => {
+        onPress();
+        // Navegar a la pantalla correspondiente
+        switch (itemName) {
+            case "Inicio":
+                navigation.navigate("TABS" as never);
+                break;
+
+            case "Mi cuenta":
+                navigation.navigate("MiCuenta" as never);
+                break;
+
+            case "Refugios":
+                navigation.navigate("Refugios" as never);
+                break;
+
+            case "Ayuda":
+                navigation.navigate("Ayuda" as never);
+                break;
+
+            case "Configuracion":
+                navigation.navigate("Configuracion" as never);
+                break;
+        }
+    }
+
+
+    if (route.name === 'Login' || route.name === 'Registrer' || route.name === 'ForgotPassword' || route.name === 'NewPassword'  ) {
+        return null
+    }
 
     return (
         <View style={style}>
@@ -33,29 +71,28 @@ export default function Menu(prop: ShowMenu): any {
                 {
                     press && (
                         <View>
-                            {
-                                itemList.map((item: ItemProps, index) =>
-                                    <TouchableOpacity key={index} style={styles.item} >
-                                        <ItemMenu name={item.name} logo={item.logo}/>
-                                    </TouchableOpacity>
-                                )
-                            }
+                            {itemList.map((item: ItemProps, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={styles.item}
+                                    onPress={() => handleSelectItem(item.name)} 
+                                >
+                                    <ItemMenu name={item.name} logo={item.logo} />
+                                </TouchableOpacity>
+                            ))}
                         </View>
                     )
                 }
             </TouchableOpacity>
         </View>
     )
-
 }
 
 const styles = StyleSheet.create({
-    
     item: {
         height: 40,
         width: '100%',
         marginTop: 25,
         paddingLeft: 10
-
     }
 })

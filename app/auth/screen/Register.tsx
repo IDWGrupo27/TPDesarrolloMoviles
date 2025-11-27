@@ -58,7 +58,7 @@ export default function Register() {
       nombre: values.nombre,
       apellido: values.apellido,
       direccion: values.direccion,
-      telefono: values.telefono, 
+      telefono: values.telefono,
     });
 
     if (error) {
@@ -208,7 +208,7 @@ export default function Register() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: materialColors.schemes.light.background },
+  container: { flex: 1, backgroundColor: materialColors.schemes.light.background, paddingHorizontal: 10 },
   title: {
     fontSize: 24,
     fontWeight: 'bold',

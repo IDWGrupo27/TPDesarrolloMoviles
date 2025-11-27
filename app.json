@@ -32,21 +32,38 @@
               "scheme": "petway"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
-      ]
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCG_ZwH1SZ-dMh87xmAf1aY6By2GQalk5I"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-secure-store",
-      "expo-font"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "3ca61c5e-91ee-48b0-9ba3-67aac17b9bcd"
-      }
-    }
+      "expo-font",
+      [
+        "expo-notifications",
+        {
+          "icon": "",
+          "color": "#ffffff"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Permitir ${PRODUCT_NAME} para acceder a tu ubicación",
+          "isIosBackgroundLocationEnabled": "Permitir ${PRODUCT_NAME} acceder a la geolocalización en background."
+        }
+      ]
+    ]
   }
 }

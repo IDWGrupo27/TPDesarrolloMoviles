@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TAB_ROUTES } from "../../../../utils/constants";
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { openWhatsApp, openInstagram, openGmail } from './links';
 
 
 export default function Nosotros() {
@@ -31,7 +32,7 @@ export default function Nosotros() {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
             <Header />
             <ScrollView>
                 <Animated.View style={[{
@@ -68,18 +69,23 @@ export default function Nosotros() {
                             resizeMode="contain" />
                         <TouchableOpacity
                             style={styles.btn}
+                            onPress={openWhatsApp}
                         >
                             <Ionicons name={'logo-whatsapp'} size={20} color={'#fff'} />
                             <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>WHATSAPP</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.btn}
+                            onPress={openGmail}
+
                         >
                             <Ionicons name={'mail-sharp'} size={20} color={'#fff'} />
                             <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>GMAIL</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.btn}
+                            onPress={openInstagram}
+
                         >
                             <Ionicons name={'logo-instagram'} size={20} color={'#fff'} />
                             <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>INSTAGRAM</Text>
