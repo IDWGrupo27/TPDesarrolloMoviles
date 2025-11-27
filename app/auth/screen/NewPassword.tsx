@@ -4,6 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { supabase } from "../../api/supabaseClient";
 import Button from "../../../components/Button";
+import Link from "../../../components/Link";
+import Header from "../../../components/Header";
 import { Ionicons } from '@expo/vector-icons';
 import { materialColors } from "../../../utils/colors"; 
 
@@ -76,75 +78,85 @@ export default function NewPassword() {
     return (
         <SafeAreaView style={styles.safeArea}>
             <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+                <Header />
                 <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
                     
-                    <Text style={styles.mainTitle}>🔐 Acceso a tu Cuenta</Text>
-                    <Text style={styles.instructionTitle}>Verificación y Nueva Contraseña</Text>
-
-                    {/* Instrucciones */}
-                    <View style={styles.instructionsContainer}>
-                         <Text style={styles.instructionStep}>1. Revisa tu email (código de seguridad).</Text>
-                         <Text style={styles.instructionStep}>2. Ingresa el código, tu email y tu nueva clave.</Text>
-                         <Text style={styles.instructionStep}>3. ¡Listo! Acceso restaurado.</Text>
-                    </View>
+                    <Text style={styles.mainTitle}>Acceso a tu Cuenta</Text>
+                    <Text style={styles.subtitle}>Ingresa el código del email y tu nueva contraseña</Text>
 
                     {/* Campo Email */}
-                    <TextInput 
-                        placeholder="Email (Usado para el reseteo)" 
-                        placeholderTextColor="#777"
-                        value={email} 
-                        onChangeText={setEmail}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        editable={!initialEmail} 
-                        style={[styles.input, initialEmail && styles.inputDisabled]}
-                    />
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Email</Text>
+                        <TextInput 
+                            placeholder="tu@email.com" 
+                            placeholderTextColor={materialColors.schemes.light.outline}
+                            value={email} 
+                            onChangeText={setEmail}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            editable={!initialEmail} 
+                            style={[styles.input, initialEmail && styles.inputDisabled]}
+                        />
+                    </View>
 
                     {/* Campo Token/Código */}
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder="Código de Seguridad (Token)" 
-                        placeholderTextColor="#777"
-                        value={token} 
-                        onChangeText={setToken}
-                        autoCapitalize="none"
-                    />
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Código de Seguridad</Text>
+                        <TextInput 
+                            style={styles.input} 
+                            placeholder="Pega el código del email aquí" 
+                            placeholderTextColor={materialColors.schemes.light.outline}
+                            value={token} 
+                            onChangeText={setToken}
+                            autoCapitalize="none"
+                        />
+                    </View>
 
                     {/* Campo Nueva Contraseña */}
-                    <View style={styles.passwordContainer}>
-                        <TextInput 
-                            style={styles.passwordInput}
-                            secureTextEntry={!passwordVisible} 
-                            placeholder="Nueva Contraseña (mín. 6 caracteres)" 
-                            placeholderTextColor="#777"
-                            value={newPassword}
-                            onChangeText={setNewPassword}
-                        />
-                        <TouchableOpacity style={styles.eyeIcon} onPress={() => setPasswordVisible(!passwordVisible)}>
-                            <Ionicons name={passwordVisible ? "eye" : "eye-off"} size={24} color="#333" />
-                        </TouchableOpacity>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Nueva Contraseña</Text>
+                        <View style={styles.passwordContainer}>
+                            <TextInput 
+                                style={styles.passwordInput}
+                                secureTextEntry={!passwordVisible} 
+                                placeholder="Mínimo 6 caracteres" 
+                                placeholderTextColor={materialColors.schemes.light.outline}
+                                value={newPassword}
+                                onChangeText={setNewPassword}
+                            />
+                            <TouchableOpacity style={styles.eyeIcon} onPress={() => setPasswordVisible(!passwordVisible)}>
+                                <Ionicons name={passwordVisible ? "eye" : "eye-off"} size={20} color={materialColors.schemes.light.outline} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
                     {/* Campo Confirmar Contraseña */}
-                    <View style={styles.passwordContainer}>
-                        <TextInput 
-                            style={styles.passwordInput} 
-                            secureTextEntry={!passwordVisible}
-                            placeholder="Confirmar Contraseña" 
-                            placeholderTextColor="#777"
-                            value={confirmPassword}
-                            onChangeText={setConfirmPassword}
-                        />
-                        <TouchableOpacity style={styles.eyeIcon} onPress={() => setPasswordVisible(!passwordVisible)}>
-                            <Ionicons name={passwordVisible ? "eye" : "eye-off"} size={24} color="#333" />
-                        </TouchableOpacity>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Confirmar Contraseña</Text>
+                        <View style={styles.passwordContainer}>
+                            <TextInput 
+                                style={styles.passwordInput} 
+                                secureTextEntry={!passwordVisible}
+                                placeholder="Repite tu nueva contraseña" 
+                                placeholderTextColor={materialColors.schemes.light.outline}
+                                value={confirmPassword}
+                                onChangeText={setConfirmPassword}
+                            />
+                            <TouchableOpacity style={styles.eyeIcon} onPress={() => setPasswordVisible(!passwordVisible)}>
+                                <Ionicons name={passwordVisible ? "eye" : "eye-off"} size={20} color={materialColors.schemes.light.outline} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
                     <Button 
-                        title={isSubmitting ? "ACTUALIZANDO..." : "ACTUALIZAR CONTRASEÑA"}
+                        title={isSubmitting ? "ACTUALIZANDO..." : "Actualizar Contraseña"}
                         onPress={handleReset} 
                         disabled={isSubmitting} 
                     />
+
+                    <View style={styles.linksContainer}>
+                        <Link link="Volver al Login" onPress={() => navigation.goBack()} />
+                    </View>
                 </ScrollView>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -154,48 +166,45 @@ export default function NewPassword() {
 const styles = StyleSheet.create({
     safeArea: { 
         flex: 1, 
-        backgroundColor: materialColors.schemes.light.surface 
+        backgroundColor: materialColors.schemes.light.background
     },
     scrollContainer: { 
         flexGrow: 1, 
         justifyContent: 'center', 
         paddingHorizontal: 24, 
-        paddingVertical: 40,
+        paddingVertical: 20,
     },
     mainTitle: { 
-        fontSize: 28, 
+        fontSize: 24, 
         fontWeight: 'bold', 
         color: materialColors.schemes.light.primary, 
         textAlign: 'center', 
-        marginBottom: 4, 
+        marginBottom: 8, 
     },
-    instructionTitle: {
-        fontSize: 16, 
-        color: materialColors.schemes.light.onSurfaceVariant, 
-        textAlign: 'center', 
-        marginBottom: 20, 
-    },
-    instructionsContainer: {
-        backgroundColor: materialColors.schemes.light.surfaceVariant, 
-        padding: 15,
-        borderRadius: 12,
-        marginBottom: 30,
-    },
-    instructionStep: {
+    subtitle: {
         fontSize: 14,
-        color: materialColors.schemes.light.onSurface,
-        paddingVertical: 3,
+        color: materialColors.schemes.light.onSurfaceVariant,
+        textAlign: 'center',
+        marginBottom: 32,
+    },
+    inputContainer: { 
+        marginBottom: 18 
+    },
+    label: {
+        fontSize: 14,
         fontWeight: '600',
+        color: materialColors.schemes.light.onBackground,
+        marginBottom: 8,
+        marginLeft: 4,
     },
     input: { 
         backgroundColor: materialColors.schemes.light.surface,
         borderColor: materialColors.schemes.light.outline,
-        color: materialColors.schemes.light.onSurface, // Texto negro
+        color: materialColors.schemes.light.onSurface,
         borderWidth: 1, 
         borderRadius: 12, 
         paddingHorizontal: 16, 
         paddingVertical: 12, 
-        marginBottom: 15,
         fontSize: 16,
     },
     inputDisabled: {
@@ -209,17 +218,19 @@ const styles = StyleSheet.create({
         borderColor: materialColors.schemes.light.outline,
         borderWidth: 1, 
         borderRadius: 12, 
-        marginBottom: 15,
         paddingHorizontal: 16,
     },
     passwordInput: { 
         flex: 1, 
         paddingVertical: 12, 
         fontSize: 16,
-        color: materialColors.schemes.light.onSurface, // Texto negro
+        color: materialColors.schemes.light.onSurface,
     },
     eyeIcon: { 
-        padding: 5,
-        marginLeft: 10,
+        padding: 8,
+    },
+    linksContainer: { 
+        marginTop: 24, 
+        alignItems: 'center' 
     },
 });
