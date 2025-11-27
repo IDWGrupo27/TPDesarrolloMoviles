@@ -1,20 +1,27 @@
 //translatePet.ts
+import i18n from '../../app/services/i18n';
+
 export function translateGender(gender: string) {
-  switch (gender.toLowerCase()) {
-    case 'male': return 'Macho';
-    case 'female': return 'Hembra';
-    default: return 'Desconocido';
-  }
+  const key = gender?.toLowerCase() || 'unknown';
+  return i18n.t(`petDetail:gender.${key}`, { defaultValue: i18n.t('petDetail:gender.unknown') });
 }
 
 export function translateSize(size: string) {
-  switch (size.toLowerCase()) {
-    case 'small': return 'Pequeño';
-    case 'medium': return 'Mediano';
-    case 'large': return 'Grande';
-    case 'xlarge': return 'Extra grande';
-    default: return 'Desconocido';
-  }
+  const key = size?.toLowerCase() || 'unknown';
+  return i18n.t(`petDetail:size.${key}`, { defaultValue: i18n.t('petDetail:size.unknown') });
+}
+
+export function translateAge(age: string) {
+  const key = age?.toLowerCase() || 'unknown';
+  return i18n.t(`petDetail:age.${key}`, { defaultValue: i18n.t('petDetail:age.unknown') });
+}
+
+export function translateAttribute(attribute: string) {
+  return i18n.t(`petDetail:attributes.${attribute}`, { defaultValue: attribute });
+}
+
+export function translateEnvironment(environment: string) {
+  return i18n.t(`petDetail:environment.${environment}`, { defaultValue: environment });
 }
 
 export function translateBooleanAttribute(value: boolean | null, label: string) {

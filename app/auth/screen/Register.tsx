@@ -208,7 +208,7 @@ export default function Register() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: materialColors.schemes.light.background, paddingHorizontal: 10 },
+  container: { flex: 1, backgroundColor: materialColors.schemes.light.background },
   title: {
     fontSize: 24,
     fontWeight: 'bold',

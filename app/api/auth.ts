@@ -2,6 +2,42 @@
 import { supabase } from './supabaseClient';
 
 /**
+ * Traduce mensajes de error técnicos de Supabase a mensajes amigables para el usuario
+ */
+function translateErrorMessage(errorMessage: string): string {
+  // Email ya existe
+  if (errorMessage.includes('duplicate key value violates unique constraint')) {
+    return 'Este correo electrónico ya está registrado. Intenta con otro o inicia sesión.';
+  }
+  if (errorMessage.includes('User already registered')) {
+    return 'Este correo electrónico ya está registrado. Intenta con otro o inicia sesión.';
+  }
+  
+  // Errores de contraseña
+  if (errorMessage.includes('Password') || errorMessage.includes('password')) {
+    return 'La contraseña no cumple con los requisitos de seguridad. Intenta con una más fuerte.';
+  }
+  
+  // Errores de validación
+  if (errorMessage.includes('invalid')) {
+    return 'Los datos ingresados no son válidos. Verifica que todo esté correcto.';
+  }
+  
+  // Errores de conexión
+  if (errorMessage.includes('Failed to fetch') || errorMessage.includes('Network')) {
+    return 'Error de conexión. Verifica tu internet e intenta de nuevo.';
+  }
+  
+  // Errores de base de datos
+  if (errorMessage.includes('violates foreign key')) {
+    return 'Ocurrió un error al guardar tus datos. Por favor, intenta de nuevo.';
+  }
+  
+  // Error por defecto
+  return 'Ocurrió un error. Por favor, intenta de nuevo.';
+}
+
+/**
  * Función para registrar usuario + perfil
  */
 export async function signUpWithProfile({
@@ -28,7 +64,7 @@ export async function signUpWithProfile({
 
   if (authError) {
     console.error('❌ Error al registrarse:', authError.message);
-    return { error: authError };
+    return { error: { message: translateErrorMessage(authError.message) } };
   }
 
   const user = authData.user;
@@ -48,7 +84,7 @@ export async function signUpWithProfile({
 
   if (profileError) {
     console.error('❌ Error al crear perfil:', profileError.message);
-    return { error: profileError };
+    return { error: { message: translateErrorMessage(profileError.message) } };
   }
 
   return { user };
@@ -71,7 +107,7 @@ export async function loginWithProfile({
 
   if (error) {
     console.error('❌ Error en login:', error.message);
-    return { error };
+    return { error: { message: translateErrorMessage(error.message) } };
   }
 
   const user = data.user;

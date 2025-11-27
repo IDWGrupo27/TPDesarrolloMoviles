@@ -23,12 +23,18 @@ export default function Root() {
 
     useEffect(() => {
         const initializeApp = async () => {
-            const storedUser = await getUser();
-            if (storedUser) {
-                dispatch({ type: AUTH_ACTIONS.SET_USER, payload: { user: JSON.parse(storedUser as string) } });
+            try {
+                const storedUser = await getUser();
+                if (storedUser) {
+                    // getUser ya devuelve el objeto parseado
+                    dispatch({ type: AUTH_ACTIONS.SET_USER, payload: { user: storedUser as any } });
+                }
+            } catch (e) {
+                console.warn('Root initializeApp error:', e);
+            } finally {
+                setIsLoading(false);
+                SplashScreen.hideAsync();
             }
-            setIsLoading(false);
-            SplashScreen.hideAsync();
         };
 
         initializeApp();

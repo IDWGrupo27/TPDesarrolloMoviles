@@ -16,5 +16,6 @@ export const AUTH_ROUTES = {
 export const TAB_ROUTES = {
     HOME: 'home',
     MY_NETWORK: 'my_network',
+    FAVORITOS: 'favoritos',
     PERFIL: 'perfil'
 }

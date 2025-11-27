@@ -17,12 +17,11 @@ interface ItemProps {
     route?: string | undefined
 }
 
+// Solo las entradas necesarias
 const itemList: ItemProps[] = [
     { name: 'Inicio', logo: 'home-outline', route: `${TAB_ROUTES.HOME}` },
     { name: 'Mi cuenta', logo: 'person', route: `${TAB_ROUTES.PERFIL}`},
     { name: 'Refugios', logo: 'location-sharp', },
-    { name: 'Ayuda', logo: 'help-circle', },
-    { name: 'Configuracion', logo: 'cog', },
 ]
 
 
@@ -35,26 +34,22 @@ export default function Menu(prop: ShowMenu): any {
 
     const handleSelectItem = (itemName: string) => {
         onPress();
-        // Navegar a la pantalla correspondiente
+        // Navegar a la pantalla correspondiente (mantener look & feel original)
         switch (itemName) {
             case "Inicio":
-                navigation.navigate("TABS" as never);
+                // Ir explícitamente al tab Home dentro de TABS
+                // @ts-ignore
+                navigation.navigate('TABS', { screen: TAB_ROUTES.HOME });
                 break;
 
             case "Mi cuenta":
-                navigation.navigate("MiCuenta" as never);
+                // Ir al tab de Perfil
+                // @ts-ignore
+                navigation.navigate('TABS', { screen: TAB_ROUTES.PERFIL });
                 break;
 
             case "Refugios":
                 navigation.navigate("Refugios" as never);
-                break;
-
-            case "Ayuda":
-                navigation.navigate("Ayuda" as never);
-                break;
-
-            case "Configuracion":
-                navigation.navigate("Configuracion" as never);
                 break;
         }
     }
@@ -94,5 +89,5 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 25,
         paddingLeft: 10
-    }
+    },
 })

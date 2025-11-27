@@ -32,7 +32,7 @@ export default function Nosotros() {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
+        <SafeAreaView style={{ flex: 1 }}>
             <Header />
             <ScrollView>
                 <Animated.View style={[{
@@ -102,16 +102,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
+        alignItems: 'stretch',
         justifyContent: 'flex-start',
-        gap: 10
+        gap: 10,
+        paddingHorizontal: 12,
+        paddingTop: 12,
+        paddingBottom: 24,
     },
 
     subtitle: {
         color: materialColors.schemes.light.primary,
         fontSize: 40,
         textAlign: 'center',
-        paddingTop: 50,
+        paddingTop: 16,
         fontWeight: 'bold'
 
     },
@@ -122,21 +125,23 @@ const styles = StyleSheet.create({
     },
 
     paragraph: {
-        fontSize: 25,
-        padding: 20,
+        fontSize: 20,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
         textAlign: 'center'
     },
 
     btn: {
         minWidth: 180,
-        marginHorizontal: 30,
-        marginVertical: 10,
+        alignSelf: 'stretch',
+        marginHorizontal: 0,
+        marginVertical: 8,
         backgroundColor: '#5e2b83',
         paddingVertical: 12,
-        paddingHorizontal: 40,
-        borderRadius: 25,
+        paddingHorizontal: 16,
+        borderRadius: 14,
         flexDirection: 'row',
-        gap: 5,
+        gap: 6,
         justifyContent: 'center'
     }
 

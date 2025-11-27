@@ -23,5 +23,8 @@
         "./core/*"
       ]
     }
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

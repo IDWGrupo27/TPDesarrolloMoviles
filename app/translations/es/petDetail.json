@@ -1,0 +1,50 @@
+{
+  "gender": {
+    "male": "Macho",
+    "female": "Hembra",
+    "unknown": "Desconocido"
+  },
+  "size": {
+    "small": "Pequeño",
+    "medium": "Mediano",
+    "large": "Grande",
+    "xlarge": "Extra grande",
+    "unknown": "Desconocido"
+  },
+  "age": {
+    "baby": "Cachorro",
+    "young": "Joven",
+    "adult": "Adulto",
+    "senior": "Senior",
+    "unknown": "Edad desconocida"
+  },
+  "attributes": {
+    "spayed_neutered": "Castrado/a",
+    "house_trained": "Entrenado/a",
+    "shots_current": "Vacunas al día",
+    "special_needs": "Necesidades especiales"
+  },
+  "environment": {
+    "children": "Con niños",
+    "dogs": "Con perros",
+    "cats": "Con gatos"
+  },
+  "labels": {
+    "breed": "Raza",
+    "age": "Edad",
+    "gender": "Sexo",
+    "size": "Tamaño",
+    "description": "Descripción",
+    "contact": "Contactar",
+    "email": "Email",
+    "phone": "Teléfono",
+    "address": "Dirección",
+    "noDescription": "No hay descripción disponible",
+    "mixed": "Mestizo",
+    "unknown": "Desconocida",
+    "ageUnknown": "Edad desconocida",
+    "characteristics": "Características",
+    "remindMe": "Recordarme",
+    "contactShelter": "Contacto del Refugio"
+  }
+}

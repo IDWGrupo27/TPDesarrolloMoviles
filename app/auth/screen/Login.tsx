@@ -176,7 +176,7 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: materialColors.schemes.light.background, paddingHorizontal: 10 },
+    container: { flex: 1, backgroundColor: materialColors.schemes.light.background },
     keyboardView: { flex: 1 },
     scrollContainer: { flexGrow: 1 },
     formContainer: { flex: 1, paddingHorizontal: 24, paddingTop: 30, paddingBottom: 20 },
